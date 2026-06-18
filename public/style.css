@@ -60,6 +60,7 @@ body {
     color: var(--color-text-dark);
     line-height: 1.6;
     overflow-x: hidden;
+    animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1916,5 +1917,56 @@ a {
     }
     .page-header p {
         font-size: 0.95rem;
+    }
+}
+
+/* ================================================
+   PAGE TRANSITION ANIMATIONS
+   ================================================ */
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pageExit {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-14px);
+    }
+}
+
+body.page-exit {
+    animation: pageExit 0.28s cubic-bezier(0.4, 0, 1, 1) forwards;
+    pointer-events: none;
+}
+
+/* Stagger main content sections on entry */
+main > section,
+main > .section-padding {
+    animation: pageEnter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+main > section:nth-child(1) { animation-delay: 0.05s; }
+main > section:nth-child(2) { animation-delay: 0.12s; }
+main > section:nth-child(3) { animation-delay: 0.19s; }
+main > section:nth-child(4) { animation-delay: 0.26s; }
+main > section:nth-child(5) { animation-delay: 0.33s; }
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    body, body.page-exit, main > section {
+        animation: none !important;
+        transition: none !important;
     }
 }
