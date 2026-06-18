@@ -214,6 +214,22 @@ a {
     gap: 12px;
 }
 
+.logo-img {
+    height: 52px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* Footer logo sits on a dark bg — light pill keeps it readable */
+.logo-area.light .logo-img {
+    height: 46px;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+}
+
+/* Keep old text classes in case used elsewhere */
 .logo-icon {
     width: 42px;
     height: 42px;
