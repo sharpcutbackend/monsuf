@@ -1,44 +1,44 @@
 /* Style.css - MONSUF Web App Design System */
 
 :root {
-    /* Color Palette */
-    --color-primary: #0a192f;
-    --color-primary-light: #172a45;
-    --color-primary-dark: #020c1b;
-    --color-accent: #10b981; /* Emerald Green */
+    /* Color Palette — White & Green Theme */
+    --color-primary: #065f46;             /* Deep emerald (headings, icons) */
+    --color-primary-light: #047857;       /* Medium emerald (hover, accents) */
+    --color-primary-dark: #064e3b;        /* Dark emerald (footer, dark sections) */
+    --color-accent: #10b981;              /* Bright emerald (buttons, highlights) */
     --color-accent-hover: #059669;
-    --color-accent-glow: rgba(16, 185, 129, 0.2);
-    --color-blue: #3b82f6; /* Blue for Research category */
-    --color-purple: #8b5cf6; /* Purple for Training category */
-    --color-bg-light: #f8fafc;
-    --color-bg-dark: #0f172a;
+    --color-accent-glow: rgba(16, 185, 129, 0.25);
+    --color-blue: #3b82f6;
+    --color-purple: #8b5cf6;
+    --color-bg-light: #f0fdf4;            /* Very light green tint (alt sections) */
+    --color-bg-dark: #064e3b;             /* Dark green (donate CTA, donate form bg) */
     --color-card-light: #ffffff;
-    --color-card-dark: #1e293b;
-    --color-text-dark: #0f172a;
-    --color-text-muted: #64748b;
-    --color-text-light: #f1f5f9;
+    --color-card-dark: #065f46;
+    --color-text-dark: #065f46;           /* Deep green for headings & body */
+    --color-text-muted: #4a7c68;          /* Muted green-gray */
+    --color-text-light: #f0fdf4;          /* Light text on dark backgrounds */
     --color-success: #10b981;
     --color-error: #ef4444;
-    
+
     /* Typography */
     --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    
+
     /* Effects & Border Radius */
     --radius-sm: 8px;
     --radius-md: 16px;
     --radius-lg: 24px;
     --radius-round: 50%;
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0 10px 30px -10px rgba(2, 12, 27, 0.08);
-    --shadow-lg: 0 20px 40px -15px rgba(2, 12, 27, 0.15);
+    --shadow-sm: 0 2px 8px rgba(6, 95, 70, 0.06);
+    --shadow-md: 0 10px 30px -10px rgba(6, 95, 70, 0.1);
+    --shadow-lg: 0 20px 40px -15px rgba(6, 95, 70, 0.15);
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* Glassmorphism */
-    --glass-bg: rgba(255, 255, 255, 0.07);
-    --glass-border: rgba(255, 255, 255, 0.1);
+
+    /* Glassmorphism — green-tinted */
+    --glass-bg: rgba(16, 185, 129, 0.08);
+    --glass-border: rgba(16, 185, 129, 0.2);
     --glass-blur: blur(12px);
 }
 
@@ -56,7 +56,7 @@ html {
 
 body {
     font-family: var(--font-body);
-    background-color: var(--color-bg-light);
+    background-color: #ffffff;
     color: var(--color-text-dark);
     line-height: 1.6;
     overflow-x: hidden;
@@ -142,14 +142,14 @@ a {
 
 /* Top Bar */
 .top-bar {
-    background-color: var(--color-primary-dark);
+    background-color: var(--color-primary);
     color: var(--color-text-light);
     font-size: 0.85rem;
     padding: 8px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .top-bar p {
@@ -300,8 +300,8 @@ a {
 /* Hero Section */
 .hero-section {
     position: relative;
-    background: radial-gradient(circle at 80% 20%, #064e3b 0%, #022c22 40%, #020c1b 100%);
-    color: var(--color-text-light);
+    background: radial-gradient(ellipse at 75% 40%, #d1fae5 0%, #ecfdf5 45%, #ffffff 100%);
+    color: var(--color-primary);
     padding: 140px 0 100px 0;
     overflow: hidden;
 }
@@ -312,8 +312,8 @@ a {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2v2h-2V0zm0 4v2h-2V4h2zm0 4v2h-2V8h2zm0 4V8h2v2h-2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2zm0 4v-2h2v2h-2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2z'/%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.3;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%2310b981' fill-opacity='0.04'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2v2h-2V0zm0 4v2h-2V4h2zm0 4v2h-2V8h2zm0 4V8h2v2h-2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2zm0 4v-2h2v2h-2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2z'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 1;
 }
 
 .hero-container {
@@ -347,7 +347,7 @@ a {
 
 .hero-title {
     font-size: 3.5rem;
-    color: white;
+    color: var(--color-primary);
     letter-spacing: -1.5px;
     margin-bottom: 24px;
     font-weight: 800;
@@ -355,7 +355,7 @@ a {
 
 .hero-lead {
     font-size: 1.15rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--color-text-muted);
     margin-bottom: 40px;
     font-weight: 400;
 }
@@ -367,13 +367,13 @@ a {
 }
 
 .hero-actions .btn-secondary {
-    color: white;
-    border-color: rgba(255, 255, 255, 0.3);
+    color: var(--color-primary);
+    border-color: rgba(6, 95, 70, 0.3);
 }
 
 .hero-actions .btn-secondary:hover {
-    border-color: white;
-    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-primary);
+    background-color: rgba(6, 95, 70, 0.06);
 }
 
 /* Impact Dashboard Card */
@@ -385,16 +385,16 @@ a {
 .stats-glass {
     width: 100%;
     max-width: 400px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(16, 185, 129, 0.25);
     backdrop-filter: var(--glass-blur);
     border-radius: var(--radius-lg);
     padding: 32px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 20px 50px rgba(6, 95, 70, 0.14);
 }
 
 .stats-card-title {
-    color: white;
+    color: var(--color-primary);
     font-size: 1.25rem;
     margin-bottom: 24px;
     font-weight: 600;
@@ -410,7 +410,7 @@ a {
     display: flex;
     flex-direction: column;
     padding-bottom: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.15);
 }
 
 .stat-item:last-child {
@@ -427,7 +427,7 @@ a {
 
 .stat-label {
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-top: 2px;
@@ -438,7 +438,7 @@ a {
     align-items: center;
     gap: 8px;
     font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--color-text-muted);
     margin-top: 24px;
 }
 
@@ -678,11 +678,11 @@ a {
 
 .trustee-img-wrapper {
     height: 180px;
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.15);
+    color: var(--color-primary-light);
     position: relative;
     overflow: hidden;
 }
@@ -704,8 +704,9 @@ a {
 
 .trustee-avatar-placeholder {
     font-size: 3.5rem;
-    color: rgba(255, 255, 255, 0.25);
+    color: var(--color-primary);
     z-index: 2;
+    opacity: 0.6;
 }
 
 .trustee-info {
