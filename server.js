@@ -481,6 +481,11 @@ app.get('/admin', (req, res) => {
     res.sendFile(path.join(PUBLIC_DIR, 'admin.html'));
 });
 
+// /staff is a clean alias for the admin portal
+app.get('/staff', (req, res) => {
+    res.sendFile(path.join(PUBLIC_DIR, 'admin.html'));
+});
+
 // Fallback to index.html for landing page routing
 app.get('*', (req, res) => {
     res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
