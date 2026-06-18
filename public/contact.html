@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact & Volunteer - Get in touch with MONSUF or register as a volunteer to support sarcoma patients.">
+    <title>Contact & Volunteer - MONSUF</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Alert Bar -->
+    <div class="top-bar">
+        <p><i class="fa-solid fa-ribbon text-accent"></i> Supporting Sarcoma Patients & Research across Nigeria and beyond</p>
+        <div class="admin-toggle-wrapper">
+            <button id="btn-admin-toggle" class="btn-admin"><i class="fa-solid fa-lock"></i> Staff Portal</button>
+            <span id="admin-badge" class="admin-badge hide">Admin Mode Active</span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="/" class="logo-area" id="link-logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-hand-holding-medical"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">MONSUF</span>
+                    <span class="logo-sub">Musculoskeletal Oncology Support</span>
+                </div>
+            </a>
+            
+            <nav class="main-nav" id="main-navigation">
+                <ul class="nav-links">
+                    <li><a href="/about" class="nav-link" id="nav-about">About Us</a></li>
+                    <li><a href="/board" class="nav-link" id="nav-board">Board of Trustees</a></li>
+                    <li><a href="/stories" class="nav-link" id="nav-stories">Success Stories</a></li>
+                    <li><a href="/contact" class="nav-link" id="nav-contact">Contact</a></li>
+                    <li><a href="/donate" class="btn btn-primary btn-donate-nav" id="nav-donate-cta">Donate Now</a></li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-toggle" id="btn-mobile-menu" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Subpage Header -->
+    <section class="page-header">
+        <div class="hero-bg-overlay"></div>
+        <div class="container">
+            <h1>Contact & Volunteer</h1>
+            <p>Reach our administrative office or join our clinical support network as a volunteer.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <section class="section-padding">
+            <div class="container">
+                <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;">
+                    <!-- Contact Information Column -->
+                    <div class="contact-info-column" style="display: flex; flex-direction: column; gap: 24px;">
+                        <div>
+                            <span class="section-tag" style="margin-bottom: 8px;">Get In Touch</span>
+                            <h2 class="section-title" style="text-align: left; font-size: 1.8rem; margin-bottom: 16px;">Foundation Headquarters</h2>
+                            <div class="section-line" style="margin: 0 0 16px 0;"></div>
+                            <p style="color: var(--color-text-muted); margin-bottom: 24px;">Our administrative office handles patient care grants, clinical research applications, and volunteer logistics. Drop by or call our coordinators directly. We are available Monday to Friday, 9am – 5pm WAT.</p>
+                        </div>
+
+                        <!-- Info Card 1: Address -->
+                        <div class="pillar-card" style="display: flex; gap: 20px; align-items: flex-start; padding: 24px; text-align: left;">
+                            <div class="pillar-icon" style="margin: 0; background-color: rgba(16, 185, 129, 0.08); color: var(--color-accent); flex-shrink: 0;"><i class="fa-solid fa-map-location-dot"></i></div>
+                            <div>
+                                <h4 style="color: var(--color-primary); margin-bottom: 6px;">Office Address</h4>
+                                <p style="margin: 0; font-size: 0.92rem; color: var(--color-text-muted); line-height: 1.7;">
+                                    Musculoskeletal Oncology Support Foundation (MONSUF)<br>
+                                    c/o Lagos Musculoskeletal Oncology Network (LAMON)<br>
+                                    Magodo GRA Phase 2,<br>
+                                    Lagos, Nigeria
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Info Card 2: Phone -->
+                        <div class="pillar-card" style="display: flex; gap: 20px; align-items: flex-start; padding: 24px; text-align: left;">
+                            <div class="pillar-icon" style="margin: 0; background-color: rgba(16, 185, 129, 0.08); color: var(--color-accent); flex-shrink: 0;"><i class="fa-solid fa-phone-volume"></i></div>
+                            <div>
+                                <h4 style="color: var(--color-primary); margin-bottom: 6px;">Phone Lines</h4>
+                                <p style="margin: 0; font-size: 0.92rem; color: var(--color-text-muted); line-height: 1.9;">
+                                    <a href="tel:+2348024938222" style="color: inherit; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-phone" style="width: 14px;"></i> +234-802-493-8222</a>
+                                    <a href="tel:+2348056081359" style="color: inherit; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-phone" style="width: 14px;"></i> +234-805-608-1359</a>
+                                    <a href="https://wa.me/2348024938222" target="_blank" rel="noopener" style="color: var(--color-accent); display: flex; align-items: center; gap: 8px;"><i class="fa-brands fa-whatsapp" style="width: 14px;"></i> WhatsApp: +234-802-493-8222</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Info Card 3: Email -->
+                        <div class="pillar-card" style="display: flex; gap: 20px; align-items: flex-start; padding: 24px; text-align: left;">
+                            <div class="pillar-icon" style="margin: 0; background-color: rgba(16, 185, 129, 0.08); color: var(--color-accent); flex-shrink: 0;"><i class="fa-solid fa-envelope-open-text"></i></div>
+                            <div>
+                                <h4 style="color: var(--color-primary); margin-bottom: 6px;">Email Address</h4>
+                                <p style="margin: 0; font-size: 0.92rem; color: var(--color-text-muted); line-height: 1.9;">
+                                    <a href="mailto:info@monsuf.org" style="color: inherit;">info@monsuf.org</a><br>
+                                    <span style="font-size: 0.82rem; color: var(--color-text-muted);">For donations, patient support enquiries &amp; volunteering</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Info Card 4: Partnership -->
+                        <div class="pillar-card" style="display: flex; gap: 20px; align-items: flex-start; padding: 24px; text-align: left;">
+                            <div class="pillar-icon" style="margin: 0; background-color: rgba(16, 185, 129, 0.08); color: var(--color-accent); flex-shrink: 0;"><i class="fa-solid fa-hospital-user"></i></div>
+                            <div>
+                                <h4 style="color: var(--color-primary); margin-bottom: 6px;">Clinical Partnership</h4>
+                                <p style="margin: 0; font-size: 0.92rem; color: var(--color-text-muted); line-height: 1.6;">
+                                    MONSUF operates in close alliance with the <strong>Lagos Musculoskeletal Oncology Network (LAMON)</strong> — a national collective of surgical oncologists dedicated to treating musculoskeletal tumours across Nigeria.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Volunteer Signup Column -->
+                    <div class="volunteer-form-column">
+                        <div class="volunteer-form-card" style="background-color: white; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border: 1px solid rgba(0, 0, 0, 0.04); padding: 40px;">
+                            <div style="text-align: center; margin-bottom: 30px;">
+                                <i class="fa-solid fa-handshake-angle" style="font-size: 2.5rem; color: var(--color-accent); margin-bottom: 12px;"></i>
+                                <h3 style="color: var(--color-primary); margin-bottom: 6px;">Become a Volunteer</h3>
+                                <p style="color: var(--color-text-muted); font-size: 0.9rem;">Join MONSUF to support patients, organize awareness walks, or manage medical seminar workshops.</p>
+                            </div>
+
+                            <form id="volunteer-signup-form">
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label for="volunteer-name" style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; color: var(--color-primary);">Full Name</label>
+                                    <input type="text" id="volunteer-name" required placeholder="e.g. John Doe" style="width: 100%; padding: 12px; border: 1px solid rgba(0,0,0,0.1); border-radius: var(--radius-sm); font-family: inherit;">
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label for="volunteer-email" style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; color: var(--color-primary);">Email Address</label>
+                                    <input type="email" id="volunteer-email" required placeholder="e.g. john@example.com" style="width: 100%; padding: 12px; border: 1px solid rgba(0,0,0,0.1); border-radius: var(--radius-sm); font-family: inherit;">
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 24px;">
+                                    <label for="volunteer-phone" style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; color: var(--color-primary);">Phone Number</label>
+                                    <input type="tel" id="volunteer-phone" required placeholder="e.g. +234-800-000-0000" style="width: 100%; padding: 12px; border: 1px solid rgba(0,0,0,0.1); border-radius: var(--radius-sm); font-family: inherit;">
+                                </div>
+
+                                <!-- Success Alert -->
+                                <div id="volunteer-success-msg" class="alert alert-success hide" style="margin-bottom: 20px; background-color: rgba(16, 185, 129, 0.1); color: var(--color-success); border: 1px solid rgba(16, 185, 129, 0.2); padding: 12px; border-radius: var(--radius-sm); font-size: 0.88rem; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span>Thank you! Your registration as a volunteer is successful. We will contact you soon.</span>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-block" style="padding: 14px;">Submit Registration</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Donate CTA Banner -->
+    <section class="donate-section section-padding">
+        <div class="container text-center">
+            <h2 class="section-title" style="color: white; margin-bottom: 20px;">Can't Volunteer? You Can Still Help</h2>
+            <p style="color: rgba(255, 255, 255, 0.7); max-width: 700px; margin: 0 auto 40px auto; font-size: 1.1rem;">
+                A financial contribution — no matter the size — directly funds a sarcoma patient's treatment, a research grant, or a surgeon's training fellowship.
+            </p>
+            <div class="hero-actions" style="justify-content: center;">
+                <a href="/donate" class="btn btn-primary btn-large"><i class="fa-solid fa-heart"></i> Donate Now</a>
+                <a href="/stories" class="btn btn-secondary btn-large" style="color: white; border-color: rgba(255,255,255,0.3);"><i class="fa-solid fa-book-open"></i> Read Success Stories</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="logo-area light">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-hand-holding-medical"></i>
+                    </div>
+                    <span class="logo-title">MONSUF</span>
+                </a>
+                <p class="footer-desc">Bridging clinical orthopedic expertise and patient welfare. Supporting treatment, funding research, training healthcare specialists.</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/about">About Our Mission</a></li>
+                    <li><a href="/board">Board of Trustees</a></li>
+                    <li><a href="/stories">Success Stories</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/donate">Donate</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links-col">
+                <h4>Contact & Info</h4>
+                <p><i class="fa-solid fa-hospital-user text-accent"></i> Partnered with LAMON</p>
+                <p><i class="fa-solid fa-envelope text-accent"></i> <a href="mailto:info@monsuf.org">info@monsuf.org</a></p>
+                <p><i class="fa-solid fa-phone text-accent"></i> <a href="tel:+2348024938222">+234-802-493-8222</a></p>
+                <p><i class="fa-solid fa-location-dot text-accent"></i> Magodo GRA Phase 2, Lagos</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-flex">
+                <p>&copy; 2026 Musculoskeletal Oncology Support Foundation (MONSUF). All Rights Reserved.</p>
+                <p>Designed for public healthcare empowerment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+
+    <!-- Admin passcode modal -->
+    <div class="modal-overlay hide" id="modal-admin-login">
+        <div class="modal-card modal-small">
+            <button class="modal-close" id="btn-close-admin-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <i class="fa-solid fa-key header-icon"></i>
+                <h3>Staff Authorization</h3>
+                <p>Enter the administrator passcode to access clinical story tools.</p>
+            </div>
+            <form id="form-admin-login">
+                <div class="form-group">
+                    <label for="admin-passcode-input">Passcode</label>
+                    <input type="password" id="admin-passcode-input" required placeholder="••••••••">
+                </div>
+                <div id="admin-login-error" class="alert alert-error hide">Invalid passcode!</div>
+                <button type="submit" class="btn btn-primary btn-block" id="btn-submit-admin-login">Authorize</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Success Story Modal -->
+    <div class="modal-overlay hide" id="modal-add-story">
+        <div class="modal-card">
+            <button class="modal-close" id="btn-close-story-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <i class="fa-solid fa-file-medical header-icon"></i>
+                <h3>Publish Success Story</h3>
+                <p>Add a new success story about support, training, or research.</p>
+            </div>
+            <form id="form-add-story" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="story-title">Story Title</label>
+                    <input type="text" id="story-title" required placeholder="e.g. Sponsoring Orthopedic Residency Support">
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-category">Category</label>
+                    <select id="story-category" required>
+                        <option value="">Select Category...</option>
+                        <option value="Patients Supported">Patients Supported</option>
+                        <option value="Research Projects">Research Projects</option>
+                        <option value="Medical Training">Medical Training</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-description">Story Details</label>
+                    <textarea id="story-description" required rows="4" placeholder="Detail the achievements and patient/training impact..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-image">Upload Image (Max 5MB)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="story-image" accept="image/*">
+                        <div class="file-upload-label">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Choose an image or drag here</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="story-upload-error" class="alert alert-error hide"></div>
+                <button type="submit" class="btn btn-primary btn-block" id="btn-publish-story">Publish Story</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Receipt Modal -->
+    <div class="modal-overlay hide" id="modal-receipt">
+        <div class="modal-card modal-receipt-card">
+            <div class="receipt-success-banner">
+                <div class="success-icon-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3>Donation Completed</h3>
+                <p>Thank you for supporting MONSUF</p>
+            </div>
+            
+            <div class="receipt-details">
+                <div class="receipt-row font-large">
+                    <span class="label">Amount Donated</span>
+                    <span class="value text-success" id="receipt-amount">₦0</span>
+                </div>
+                <div class="receipt-divider"></div>
+                <div class="receipt-row">
+                    <span class="label">Transaction ID</span>
+                    <span class="value" id="receipt-txn-id">TXN-000000000</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Date</span>
+                    <span class="value" id="receipt-date">2026-06-18</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Donor Name</span>
+                    <span class="value" id="receipt-donor-name">John Doe</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Donor Email</span>
+                    <span class="value" id="receipt-donor-email">john@example.com</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Payment Status</span>
+                    <span class="value badge-status">Settled</span>
+                </div>
+            </div>
+            
+            <div class="receipt-message">
+                A formal tax-deductible receipt has been dispatched to your email address. Your contribution directly funds musculoskeletal oncology care and research.
+            </div>
+            
+            <button class="btn btn-secondary btn-block" id="btn-close-receipt">Close Receipt</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

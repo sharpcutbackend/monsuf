@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Donate - Securely support MONSUF's mission in sarcoma patient care, clinical research, and resident training.">
+    <title>Donate Now - MONSUF</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Alert Bar -->
+    <div class="top-bar">
+        <p><i class="fa-solid fa-ribbon text-accent"></i> Supporting Sarcoma Patients & Research across Nigeria and beyond</p>
+        <div class="admin-toggle-wrapper">
+            <button id="btn-admin-toggle" class="btn-admin"><i class="fa-solid fa-lock"></i> Staff Portal</button>
+            <span id="admin-badge" class="admin-badge hide">Admin Mode Active</span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="/" class="logo-area" id="link-logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-hand-holding-medical"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">MONSUF</span>
+                    <span class="logo-sub">Musculoskeletal Oncology Support</span>
+                </div>
+            </a>
+            
+            <nav class="main-nav" id="main-navigation">
+                <ul class="nav-links">
+                    <li><a href="/about" class="nav-link" id="nav-about">About Us</a></li>
+                    <li><a href="/board" class="nav-link" id="nav-board">Board of Trustees</a></li>
+                    <li><a href="/stories" class="nav-link" id="nav-stories">Success Stories</a></li>
+                    <li><a href="/contact" class="nav-link" id="nav-contact">Contact</a></li>
+                    <li><a href="/donate" class="btn btn-primary btn-donate-nav" id="nav-donate-cta">Donate Now</a></li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-toggle" id="btn-mobile-menu" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Subpage Header -->
+    <section class="page-header">
+        <div class="hero-bg-overlay"></div>
+        <div class="container">
+            <h1>Support Our Mission</h1>
+            <p>Every naira funds patient treatment subsidies, orthopedic oncology research, and clinical surgeon training.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Donation Grid & Gateway Section -->
+        <section class="section-padding donate-section">
+            <div class="container">
+                <div class="donate-grid">
+                    <!-- Form Card -->
+                    <div class="donate-form-column">
+                        <!-- Step 1: Amount Selection -->
+                        <form id="donation-setup-form" class="donation-setup-form">
+                            <h3><i class="fa-solid fa-hand-holding-dollar"></i> Select Donation Amount</h3>
+                            
+                            <div class="form-group">
+                                <label for="donor-name">Your Full Name</label>
+                                <input type="text" id="donor-name" required placeholder="e.g. John Doe">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="donor-email">Your Email Address</label>
+                                <input type="email" id="donor-email" required placeholder="e.g. john@example.com">
+                            </div>
+
+                            <!-- Payment System Selection -->
+                            <div class="form-group">
+                                <label>Choose Payment Method</label>
+                                <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 8px;">
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: rgba(255,255,255,0.04); padding: 12px 16px; border-radius: var(--radius-sm); border: 1.5px solid rgba(255,255,255,0.1);" id="payment-method-online-label">
+                                        <input type="radio" name="paymentMethodSelect" value="Card" checked style="width: auto; margin: 0; accent-color: var(--color-accent);">
+                                        <span style="font-size: 0.92rem; color: white;"><i class="fa-solid fa-credit-card text-accent" style="margin-right: 6px;"></i> Online Card Payment</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: rgba(255,255,255,0.04); padding: 12px 16px; border-radius: var(--radius-sm); border: 1.5px solid rgba(255,255,255,0.1);" id="payment-method-bank-label">
+                                        <input type="radio" name="paymentMethodSelect" value="Bank Transfer" style="width: auto; margin: 0; accent-color: var(--color-accent);">
+                                        <span style="font-size: 0.92rem; color: white;"><i class="fa-solid fa-building-columns text-accent" style="margin-right: 6px;"></i> Bank Transfer</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: rgba(255,255,255,0.04); padding: 12px 16px; border-radius: var(--radius-sm); border: 1.5px solid rgba(255,255,255,0.1);" id="payment-method-cash-label">
+                                        <input type="radio" name="paymentMethodSelect" value="Cash" style="width: auto; margin: 0; accent-color: var(--color-accent);">
+                                        <span style="font-size: 0.92rem; color: white;"><i class="fa-solid fa-money-bill-wave text-accent" style="margin-right: 6px;"></i> Cash Pledge</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Donation Amount (NGN — Nigerian Naira)</label>
+                                <div class="amount-tiers-grid">
+                                    <button type="button" class="amount-tier" data-amount="5000">₦5,000</button>
+                                    <button type="button" class="amount-tier active" data-amount="10000">₦10,000</button>
+                                    <button type="button" class="amount-tier" data-amount="25000">₦25,000</button>
+                                    <button type="button" class="amount-tier" data-amount="50000">₦50,000</button>
+                                </div>
+                                <div class="custom-amount-wrapper" style="margin-top: 12px;">
+                                    <span class="currency-prefix" style="color: rgba(255,255,255,0.4); font-size: 1.1rem; line-height: 1;">₦</span>
+                                    <input type="number" id="custom-amount-input" min="100" placeholder="Enter Custom Amount (NGN)" style="padding-left: 28px; width: 100%;">
+                                </div>
+                                <!-- International currency note — populated by JS -->
+                                <div id="currency-note" style="margin-top: 10px; padding: 10px 14px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); border-radius: var(--radius-sm); font-size: 0.8rem; color: rgba(255,255,255,0.6); display: none;">
+                                    <i class="fa-solid fa-globe text-accent"></i> <span id="currency-note-text"></span>
+                                </div>
+                            </div>
+
+                            <span class="donation-tier-desc" id="donation-impact-text" style="color: rgba(255,255,255,0.6); display: block; margin-bottom: 24px; font-style: italic; font-size: 0.9rem;">
+                                ₦10,000 buys critical support medication for chemotherapy sessions.
+                            </span>
+
+                            <button type="button" class="btn btn-primary btn-block" id="btn-next-to-payment" style="padding: 14px;">
+                                Proceed to Payment <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </form>
+
+                        <!-- Step 2: Payment Gateway Card Details -->
+                        <form id="donation-payment-form" class="donation-payment-form hide">
+                            <button type="button" class="btn-back" id="btn-back-to-details" style="color: var(--color-accent); font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 20px; background: none; border: none; cursor: pointer; font-family: inherit;">
+                                <i class="fa-solid fa-arrow-left"></i> Change Amount / Info
+                            </button>
+
+                            <!-- Online Card Payment Section -->
+                            <div id="payment-section-card" class="payment-sub-section">
+                                <h3><i class="fa-solid fa-credit-card"></i> Pay Securely with Card</h3>
+                                
+                                <div class="form-group">
+                                    <label for="card-number">Card Number</label>
+                                    <div class="input-icon-wrapper" style="position: relative;">
+                                        <i class="fa-solid fa-credit-card input-icon" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.4);"></i>
+                                        <input type="text" id="card-number" placeholder="4000 1234 5678 9010" style="padding-left: 42px; width: 100%;">
+                                    </div>
+                                </div>
+
+                                <div class="form-group-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    <div class="form-group">
+                                        <label for="card-expiry">Expiry Date</label>
+                                        <input type="text" id="card-expiry" placeholder="MM/YY">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="card-cvv">CVV</label>
+                                        <input type="password" id="card-cvv" placeholder="•••">
+                                    </div>
+                                </div>
+
+                                <div class="payment-note" style="background-color: rgba(255, 255, 255, 0.04); border: 1px dashed rgba(255, 255, 255, 0.12); padding: 16px; border-radius: var(--radius-sm); font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 24px;">
+                                    <i class="fa-solid fa-lock text-accent"></i> Secured 256-bit SSL encrypted connection. All mock transactions are processed through simulation.
+                                </div>
+                            </div>
+
+                            <!-- Bank Transfer Details Section -->
+                            <div id="payment-section-bank" class="payment-sub-section hide">
+                                <h3><i class="fa-solid fa-building-columns"></i> Bank Transfer Account Details</h3>
+                                
+                                <div class="bank-details-box" style="background-color: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: var(--radius-sm); margin-bottom: 24px; display: flex; flex-direction: column; gap: 12px;">
+                                    <div>
+                                        <span style="font-size: 0.72rem; color: rgba(255,255,255,0.45); text-transform: uppercase; display: block; margin-bottom: 2px;">Bank Name</span>
+                                        <div style="font-weight: 700; color: white;" id="display-bank-name">Guaranty Trust Bank (GTBank)</div>
+                                    </div>
+                                    <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px;">
+                                        <span style="font-size: 0.72rem; color: rgba(255,255,255,0.45); text-transform: uppercase; display: block; margin-bottom: 2px;">Account Number</span>
+                                        <div style="font-weight: 800; color: var(--color-accent); font-size: 1.2rem; letter-spacing: 0.5px;" id="display-account-num">0123456789</div>
+                                    </div>
+                                    <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px;">
+                                        <span style="font-size: 0.72rem; color: rgba(255,255,255,0.45); text-transform: uppercase; display: block; margin-bottom: 2px;">Account Name</span>
+                                        <div style="font-weight: 600; color: white; font-size: 0.9rem;" id="display-account-name">MONSUF - Musculoskeletal Oncology Support Foundation</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="bank-reference">Transaction Reference / Narration</label>
+                                    <input type="text" id="bank-reference" placeholder="Enter bank reference ID, transfer ID, or narration">
+                                    <span style="font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 6px; display: block;">* Please complete the transfer using your bank app before submitting this reference form.</span>
+                                </div>
+                            </div>
+
+                            <!-- Cash Pledge Details Section -->
+                            <div id="payment-section-cash" class="payment-sub-section hide">
+                                <h3><i class="fa-solid fa-money-bill-wave"></i> Cash Donation Instructions</h3>
+                                
+                                <div class="cash-details-box" style="background-color: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.12); padding: 20px; border-radius: var(--radius-sm); margin-bottom: 24px; font-size: 0.88rem; line-height: 1.5; color: rgba(255,255,255,0.75);" id="display-cash-instructions">
+                                    Cash donations can be dropped off directly at our Magodo head office or picked up by an official coordinator. Please contact +234-802-493-8222 to schedule.
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pledge-phone">Contact Phone Number</label>
+                                    <input type="tel" id="pledge-phone" placeholder="e.g. +234-803-000-0000">
+                                    <span style="font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 6px; display: block;">* Our coordinator will reach out to verify the pledge and schedule pick-up.</span>
+                                </div>
+                            </div>
+
+                            <div id="payment-error-alert" class="alert alert-error hide" style="background-color: rgba(239, 68, 68, 0.1); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.2); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 20px; font-size: 0.9rem;"></div>
+
+                            <button type="submit" class="btn btn-primary btn-block" id="btn-submit-donation" style="padding: 14px;">
+                                <span id="btn-submit-text">Confirm Donation of ₦10,000</span>
+                                <span id="btn-submit-spinner" class="hide"><i class="fa-solid fa-circle-notch fa-spin"></i> Processing...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Card Visualizer Column -->
+                    <div class="donate-visual-column" style="display: flex; flex-direction: column; align-items: center; gap: 32px;" id="donation-visual-column">
+                        <div class="credit-card-container">
+                            <div class="credit-card" id="credit-card-object">
+                                <!-- Front of Card -->
+                                <div class="card-front">
+                                    <div class="card-glow"></div>
+                                    <div class="card-row card-header-row">
+                                        <i class="fa-solid fa-microchip card-chip"></i>
+                                        <span id="card-type-logo" class="card-type-icon"><i class="fa-solid fa-credit-card"></i></span>
+                                    </div>
+                                    <div class="card-number-display" id="card-num-display">•••• •••• •••• ••••</div>
+                                    <div class="card-row">
+                                        <div>
+                                            <div class="card-display-label">Card Holder</div>
+                                            <div class="card-display-value" id="card-name-display">YOUR NAME</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div class="card-display-label">Expires</div>
+                                            <div class="card-display-value" id="card-expiry-display">MM/YY</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Back of Card -->
+                                <div class="card-back">
+                                    <div class="card-glow"></div>
+                                    <div class="card-magnetic-strip"></div>
+                                    <div class="card-signature-area">
+                                        <div class="card-display-label" style="margin-left: 8px;">Authorized Signature / CVV</div>
+                                        <div class="signature-line">
+                                            <span class="cvv-display" id="card-cvv-display">•••</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-back-branding">MONSUF PAYMENTS SECURE</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="security-badges" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                            <span class="badge"><i class="fa-solid fa-shield-halved text-accent"></i> PCI-DSS Compliant</span>
+                            <span class="badge"><i class="fa-solid fa-lock text-accent"></i> 256-bit SSL Encryption</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="logo-area light">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-hand-holding-medical"></i>
+                    </div>
+                    <span class="logo-title">MONSUF</span>
+                </a>
+                <p class="footer-desc">Bridging clinical orthopedic expertise and patient welfare. Supporting treatment, funding research, training healthcare specialists.</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/about">About Our Mission</a></li>
+                    <li><a href="/board">Board of Trustees</a></li>
+                    <li><a href="/stories">Success Stories</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/donate">Donate</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links-col">
+                <h4>Contact & Info</h4>
+                <p><i class="fa-solid fa-hospital-user text-accent"></i> Partnered with LAMON</p>
+                <p><i class="fa-solid fa-envelope text-accent"></i> <a href="mailto:info@monsuf.org">info@monsuf.org</a></p>
+                <p><i class="fa-solid fa-phone text-accent"></i> <a href="tel:+2348024938222">+234-802-493-8222</a></p>
+                <p><i class="fa-solid fa-location-dot text-accent"></i> Magodo GRA Phase 2, Lagos</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-flex">
+                <p>&copy; 2026 Musculoskeletal Oncology Support Foundation (MONSUF). All Rights Reserved.</p>
+                <p>Designed for public healthcare empowerment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+
+    <!-- Admin passcode modal -->
+    <div class="modal-overlay hide" id="modal-admin-login">
+        <div class="modal-card modal-small">
+            <button class="modal-close" id="btn-close-admin-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <i class="fa-solid fa-key header-icon"></i>
+                <h3>Staff Authorization</h3>
+                <p>Enter the administrator passcode to access clinical story tools.</p>
+            </div>
+            <form id="form-admin-login">
+                <div class="form-group">
+                    <label for="admin-passcode-input">Passcode</label>
+                    <input type="password" id="admin-passcode-input" required placeholder="••••••••">
+                </div>
+                <div id="admin-login-error" class="alert alert-error hide">Invalid passcode!</div>
+                <button type="submit" class="btn btn-primary btn-block" id="btn-submit-admin-login">Authorize</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Success Story Modal -->
+    <div class="modal-overlay hide" id="modal-add-story">
+        <div class="modal-card">
+            <button class="modal-close" id="btn-close-story-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <i class="fa-solid fa-file-medical header-icon"></i>
+                <h3>Publish Success Story</h3>
+                <p>Add a new success story about support, training, or research.</p>
+            </div>
+            <form id="form-add-story" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="story-title">Story Title</label>
+                    <input type="text" id="story-title" required placeholder="e.g. Sponsoring Orthopedic Residency Support">
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-category">Category</label>
+                    <select id="story-category" required>
+                        <option value="">Select Category...</option>
+                        <option value="Patients Supported">Patients Supported</option>
+                        <option value="Research Projects">Research Projects</option>
+                        <option value="Medical Training">Medical Training</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-description">Story Details</label>
+                    <textarea id="story-description" required rows="4" placeholder="Detail the achievements and patient/training impact..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-image">Upload Image (Max 5MB)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="story-image" accept="image/*">
+                        <div class="file-upload-label">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Choose an image or drag here</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="story-upload-error" class="alert alert-error hide"></div>
+                <button type="submit" class="btn btn-primary btn-block" id="btn-publish-story">Publish Story</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Receipt Modal -->
+    <div class="modal-overlay hide" id="modal-receipt">
+        <div class="modal-card modal-receipt-card">
+            <div class="receipt-success-banner">
+                <div class="success-icon-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3>Donation Completed</h3>
+                <p>Thank you for supporting MONSUF</p>
+            </div>
+            
+            <div class="receipt-details">
+                <div class="receipt-row font-large">
+                    <span class="label">Amount Donated</span>
+                    <span class="value text-success" id="receipt-amount">₦0</span>
+                </div>
+                <div class="receipt-divider"></div>
+                <div class="receipt-row">
+                    <span class="label">Transaction ID</span>
+                    <span class="value" id="receipt-txn-id">TXN-000000000</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Date</span>
+                    <span class="value" id="receipt-date">2026-06-18</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Donor Name</span>
+                    <span class="value" id="receipt-donor-name">John Doe</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Donor Email</span>
+                    <span class="value" id="receipt-donor-email">john@example.com</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Payment Status</span>
+                    <span class="value badge-status">Settled</span>
+                </div>
+            </div>
+            
+            <div class="receipt-message">
+                A formal tax-deductible receipt has been dispatched to your email address. Your contribution directly funds musculoskeletal oncology care and research.
+            </div>
+            
+            <button class="btn btn-secondary btn-block" id="btn-close-receipt">Close Receipt</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

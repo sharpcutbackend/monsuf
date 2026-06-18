@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About MONSUF - Learn about our mission, history with LAMON, constitutional objectives, and leadership committee.">
+    <title>About Us - MONSUF</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Alert Bar -->
+    <div class="top-bar">
+        <p><i class="fa-solid fa-ribbon text-accent"></i> Supporting Sarcoma Patients & Research across Nigeria and beyond</p>
+        <div class="admin-toggle-wrapper">
+            <button id="btn-admin-toggle" class="btn-admin"><i class="fa-solid fa-lock"></i> Staff Portal</button>
+            <span id="admin-badge" class="admin-badge hide">Admin Mode Active</span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="/" class="logo-area" id="link-logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-hand-holding-medical"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">MONSUF</span>
+                    <span class="logo-sub">Musculoskeletal Oncology Support</span>
+                </div>
+            </a>
+            
+            <nav class="main-nav" id="main-navigation">
+                <ul class="nav-links">
+                    <li><a href="/about" class="nav-link" id="nav-about">About Us</a></li>
+                    <li><a href="/board" class="nav-link" id="nav-board">Board of Trustees</a></li>
+                    <li><a href="/stories" class="nav-link" id="nav-stories">Success Stories</a></li>
+                    <li><a href="/contact" class="nav-link" id="nav-contact">Contact</a></li>
+                    <li><a href="/donate" class="btn btn-primary btn-donate-nav" id="nav-donate-cta">Donate Now</a></li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-toggle" id="btn-mobile-menu" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Subpage Header -->
+    <section class="page-header">
+        <div class="hero-bg-overlay"></div>
+        <div class="container">
+            <h1>About MONSUF</h1>
+            <p>Bridging orthopedic clinical oncology and patient welfare since our founding.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Origin Section -->
+        <section class="about-section section-padding">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text-column">
+                        <span class="section-tag">Our History</span>
+                        <h2 class="section-title" style="text-align: left; margin-bottom: 24px;">Origin & Alliance with LAMON</h2>
+                        <div class="section-line" style="margin: 0 0 24px 0;"></div>
+                        <p>
+                            The **Musculoskeletal Oncology Support Foundation (MONSUF)** was carved out from the **Lagos Musculoskeletal Oncology Network (LAMON)**. LAMON is a national medical collective formed by surgical oncologists, radiotherapists, pathologists, physiotherapists, and other healthcare practitioners who dedicate their careers to treating musculoskeletal tumors (sarcomas).
+                        </p>
+                        <p>
+                            Members of LAMON meet on a monthly basis to review patient cases, evaluate treatments administered, and brainstorm clinical options to provide the best possible outcomes. In doing so, it became apparent that medical expertise alone is insufficient: patients face overwhelming financial barriers to accessing limb-salvage surgeries, chemotherapies, and prosthetics.
+                        </p>
+                        <p>
+                            MONSUF was established with the primary aim of lifting this financial burden, providing critical social, emotional, and psychological support for sarcoma patients and their families, and funding oncology research and training.
+                        </p>
+                    </div>
+                    
+                    <div class="about-image-column">
+                        <div class="image-wrapper">
+                            <div class="image-bg-effect"></div>
+                            <div class="visual-abstract-card">
+                                <div class="abstract-glow"></div>
+                                <i class="fa-solid fa-people-group abstract-ribbon"></i>
+                                <span class="abstract-title">Formed from LAMON</span>
+                                <span class="abstract-desc">A specialized partnership bridging medical expertise and humanitarian support.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Constitutional Objectives -->
+        <section class="about-section section-padding" style="background-color: var(--color-bg-light);">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Constitutional Mission</span>
+                    <h2 class="section-title">Aims & Objectives of MONSUF</h2>
+                    <div class="section-line"></div>
+                </div>
+                
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <ul class="aims-list" style="gap: 20px;">
+                        <li style="background: white; padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid var(--color-accent);">
+                            <i class="fa-solid fa-circle-check text-accent" style="font-size: 1.25rem;"></i>
+                            <div>
+                                <h4 style="margin-bottom: 6px; color: var(--color-primary);">Patient Social & Psychological Support</h4>
+                                <p style="margin: 0; font-size: 0.95rem;">To provide social and psychological support for patients with musculoskeletal tumours and their families throughout their clinical journey.</p>
+                            </div>
+                        </li>
+                        <li style="background: white; padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid var(--color-accent);">
+                            <i class="fa-solid fa-circle-check text-accent" style="font-size: 1.25rem;"></i>
+                            <div>
+                                <h4 style="margin-bottom: 6px; color: var(--color-primary);">Encouraging Support Interactions</h4>
+                                <p style="margin: 0; font-size: 0.95rem;">To encourage interaction between individuals and organizations whose aim is to provide support for individuals with musculoskeletal tumours.</p>
+                            </div>
+                        </li>
+                        <li style="background: white; padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid var(--color-accent);">
+                            <i class="fa-solid fa-circle-check text-accent" style="font-size: 1.25rem;"></i>
+                            <div>
+                                <h4 style="margin-bottom: 6px; color: var(--color-primary);">Improving Tumour Awareness</h4>
+                                <p style="margin: 0; font-size: 0.95rem;">To improve public awareness of musculoskeletal tumours, encouraging early detection, referral, and medical consultation.</p>
+                            </div>
+                        </li>
+                        <li style="background: white; padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid var(--color-accent);">
+                            <i class="fa-solid fa-circle-check text-accent" style="font-size: 1.25rem;"></i>
+                            <div>
+                                <h4 style="margin-bottom: 6px; color: var(--color-primary);">Advancing Sarcoma Research</h4>
+                                <p style="margin: 0; font-size: 0.95rem;">To encourage and fund scientific research and clinical investigations into the causes, diagnostics, and surgical treatments of sarcomas.</p>
+                            </div>
+                        </li>
+                        <li style="background: white; padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid var(--color-accent);">
+                            <i class="fa-solid fa-circle-check text-accent" style="font-size: 1.25rem;"></i>
+                            <div>
+                                <h4 style="margin-bottom: 6px; color: var(--color-primary);">Clinical Residency & Fellowship Training</h4>
+                                <p style="margin: 0; font-size: 0.95rem;">To support and fund the specialized training of medical residents, orthopedic surgeons, and nurses in musculoskeletal oncology care.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Committee (EXCO) Section -->
+        <section class="about-section section-padding">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Governance</span>
+                    <h2 class="section-title">Executive Committee (EXCO)</h2>
+                    <div class="section-line"></div>
+                    <p class="section-subtitle">Our executive officers directing the clinical collaborations and patient resources.</p>
+                </div>
+                
+                <div class="board-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+                    <!-- EXCO Member 1 -->
+                    <div class="trustee-card" style="padding: 24px; text-align: center;">
+                        <div class="trustee-avatar-placeholder" style="color: var(--color-primary); font-size: 2.5rem; margin-bottom: 16px;">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <h3 class="trustee-name">Prof. A. O. Obalum</h3>
+                        <span class="trustee-role" style="font-size: 0.78rem;">President</span>
+                        <p class="trustee-bio" style="font-size: 0.85rem; margin-top: 10px;">Professor and Consultant Orthopaedic Surgeon directing administrative policies.</p>
+                    </div>
+
+                    <!-- EXCO Member 2 -->
+                    <div class="trustee-card" style="padding: 24px; text-align: center;">
+                        <div class="trustee-avatar-placeholder" style="color: var(--color-primary); font-size: 2.5rem; margin-bottom: 16px;">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <h3 class="trustee-name">Dr. L. A. Temiye</h3>
+                        <span class="trustee-role" style="font-size: 0.78rem;">Vice-President</span>
+                        <p class="trustee-bio" style="font-size: 0.85rem; margin-top: 10px;">Consultant pediatrician oncologist overseeing clinical program alignment.</p>
+                    </div>
+
+                    <!-- EXCO Member 3 -->
+                    <div class="trustee-card" style="padding: 24px; text-align: center;">
+                        <div class="trustee-avatar-placeholder" style="color: var(--color-primary); font-size: 2.5rem; margin-bottom: 16px;">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                        <h3 class="trustee-name">Dr. S. K. Olayiwola</h3>
+                        <span class="trustee-role" style="font-size: 0.78rem;">Secretary</span>
+                        <p class="trustee-bio" style="font-size: 0.85rem; margin-top: 10px;">Coordinating internal communications and organizational documentation.</p>
+                    </div>
+
+                    <!-- EXCO Member 4 -->
+                    <div class="trustee-card" style="padding: 24px; text-align: center;">
+                        <div class="trustee-avatar-placeholder" style="color: var(--color-primary); font-size: 2.5rem; margin-bottom: 16px;">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <h3 class="trustee-name">Mrs. O. O. Arogundade</h3>
+                        <span class="trustee-role" style="font-size: 0.78rem;">Treasurer</span>
+                        <p class="trustee-bio" style="font-size: 0.85rem; margin-top: 10px;">Managing fund allocations, donations transparency, and audit reporting.</p>
+                    </div>
+
+                    <!-- EXCO Member 5 -->
+                    <div class="trustee-card" style="padding: 24px; text-align: center;">
+                        <div class="trustee-avatar-placeholder" style="color: var(--color-primary); font-size: 2.5rem; margin-bottom: 16px;">
+                            <i class="fa-solid fa-gavel"></i>
+                        </div>
+                        <h3 class="trustee-name">Barr. O. O. Olayiwola</h3>
+                        <span class="trustee-role" style="font-size: 0.78rem;">Legal Adviser</span>
+                        <p class="trustee-bio" style="font-size: 0.85rem; margin-top: 10px;">Ensuring full statutory compliance and constitutional governance.</p>
+                    </div>
+
+                    <!-- EXCO Member 6 -->
+                    <div class="trustee-card" style="padding: 24px; text-align: center;">
+                        <div class="trustee-avatar-placeholder" style="color: var(--color-primary); font-size: 2.5rem; margin-bottom: 16px;">
+                            <i class="fa-solid fa-hospital-user"></i>
+                        </div>
+                        <h3 class="trustee-name">Dr. M. O. Yusuf</h3>
+                        <span class="trustee-role" style="font-size: 0.78rem;">Executive Coordinator</span>
+                        <p class="trustee-bio" style="font-size: 0.85rem; margin-top: 10px;">Managing day-to-day operations and patient welfare resources logistics.</p>
+                    </div>
+
+                    <!-- EXCO Member 7 -->
+                    <div class="trustee-card" style="padding: 24px; text-align: center;">
+                        <div class="trustee-avatar-placeholder" style="color: var(--color-primary); font-size: 2.5rem; margin-bottom: 16px;">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <h3 class="trustee-name">Dr. I. O. Alabi</h3>
+                        <span class="trustee-role" style="font-size: 0.78rem;">Immediate Past Coordinator</span>
+                        <p class="trustee-bio" style="font-size: 0.85rem; margin-top: 10px;">Providing executive operational insights and legacy patient relations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Donate CTA Banner -->
+    <section class="donate-section section-padding">
+        <div class="container text-center">
+            <h2 class="section-title" style="color: white; margin-bottom: 20px;">Give a Helping Hand to Needy People</h2>
+            <p style="color: rgba(255, 255, 255, 0.7); max-width: 700px; margin: 0 auto 40px auto; font-size: 1.1rem;">
+                Membership is open to any willing and responsible Nigerian and non-Nigerian who believes in the aims and objectives of MONSUF. Join our community and make a difference today.
+            </p>
+            <div class="hero-actions" style="justify-content: center;">
+                <a href="/donate" class="btn btn-primary btn-large"><i class="fa-solid fa-heart"></i> Donate Securely</a>
+                <a href="/contact" class="btn btn-secondary btn-large" style="color: white; border-color: rgba(255,255,255,0.3);"><i class="fa-solid fa-user-plus"></i> Become a Volunteer</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="logo-area light">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-hand-holding-medical"></i>
+                    </div>
+                    <span class="logo-title">MONSUF</span>
+                </a>
+                <p class="footer-desc">Bridging clinical orthopedic expertise and patient welfare. Supporting treatment, funding research, training healthcare specialists.</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/about">About Our Mission</a></li>
+                    <li><a href="/board">Board of Trustees</a></li>
+                    <li><a href="/stories">Success Stories</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/donate">Donate</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links-col">
+                <h4>Contact & Info</h4>
+                <p><i class="fa-solid fa-hospital-user text-accent"></i> Partnered with LAMON</p>
+                <p><i class="fa-solid fa-envelope text-accent"></i> <a href="mailto:info@monsuf.org">info@monsuf.org</a></p>
+                <p><i class="fa-solid fa-phone text-accent"></i> <a href="tel:+2348024938222">+234-802-493-8222</a></p>
+                <p><i class="fa-solid fa-location-dot text-accent"></i> Magodo GRA Phase 2, Lagos</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-flex">
+                <p>&copy; 2026 Musculoskeletal Oncology Support Foundation (MONSUF). All Rights Reserved.</p>
+                <p>Designed for public healthcare empowerment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+
+    <!-- Admin passcode modal -->
+    <div class="modal-overlay hide" id="modal-admin-login">
+        <div class="modal-card modal-small">
+            <button class="modal-close" id="btn-close-admin-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <i class="fa-solid fa-key header-icon"></i>
+                <h3>Staff Authorization</h3>
+                <p>Enter the administrator passcode to access clinical story tools.</p>
+            </div>
+            <form id="form-admin-login">
+                <div class="form-group">
+                    <label for="admin-passcode-input">Passcode</label>
+                    <input type="password" id="admin-passcode-input" required placeholder="••••••••">
+                </div>
+                <div id="admin-login-error" class="alert alert-error hide">Invalid passcode!</div>
+                <button type="submit" class="btn btn-primary btn-block" id="btn-submit-admin-login">Authorize</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Success Story Modal -->
+    <div class="modal-overlay hide" id="modal-add-story">
+        <div class="modal-card">
+            <button class="modal-close" id="btn-close-story-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <i class="fa-solid fa-file-medical header-icon"></i>
+                <h3>Publish Success Story</h3>
+                <p>Add a new success story about support, training, or research.</p>
+            </div>
+            <form id="form-add-story" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="story-title">Story Title</label>
+                    <input type="text" id="story-title" required placeholder="e.g. Sponsoring Orthopedic Residency Support">
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-category">Category</label>
+                    <select id="story-category" required>
+                        <option value="">Select Category...</option>
+                        <option value="Patients Supported">Patients Supported</option>
+                        <option value="Research Projects">Research Projects</option>
+                        <option value="Medical Training">Medical Training</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-description">Story Details</label>
+                    <textarea id="story-description" required rows="4" placeholder="Detail the achievements and patient/training impact..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="story-image">Upload Image (Max 5MB)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="story-image" accept="image/*">
+                        <div class="file-upload-label">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Choose an image or drag here</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="story-upload-error" class="alert alert-error hide"></div>
+                <button type="submit" class="btn btn-primary btn-block" id="btn-publish-story">Publish Story</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Receipt Modal -->
+    <div class="modal-overlay hide" id="modal-receipt">
+        <div class="modal-card modal-receipt-card">
+            <div class="receipt-success-banner">
+                <div class="success-icon-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3>Donation Completed</h3>
+                <p>Thank you for supporting MONSUF</p>
+            </div>
+            
+            <div class="receipt-details">
+                <div class="receipt-row font-large">
+                    <span class="label">Amount Donated</span>
+                    <span class="value text-success" id="receipt-amount">₦0</span>
+                </div>
+                <div class="receipt-divider"></div>
+                <div class="receipt-row">
+                    <span class="label">Transaction ID</span>
+                    <span class="value" id="receipt-txn-id">TXN-000000000</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Date</span>
+                    <span class="value" id="receipt-date">2026-06-18</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Donor Name</span>
+                    <span class="value" id="receipt-donor-name">John Doe</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Donor Email</span>
+                    <span class="value" id="receipt-donor-email">john@example.com</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">Payment Status</span>
+                    <span class="value badge-status">Settled</span>
+                </div>
+            </div>
+            
+            <div class="receipt-message">
+                A formal tax-deductible receipt has been dispatched to your email address. Your contribution directly funds musculoskeletal oncology care and research.
+            </div>
+            
+            <button class="btn btn-secondary btn-block" id="btn-close-receipt">Close Receipt</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

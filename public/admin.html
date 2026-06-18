@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MONSUF Administration and Content Portal">
+    <title>Staff Portal - MONSUF</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Global style linking -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Custom Portal Theme Variables & Overrides */
+        :root {
+            --portal-bg: #0b1329;
+            --portal-card: #1c2541;
+            --portal-card-hover: #222e50;
+            --portal-text: #f1f5f9;
+            --portal-text-muted: #94a3b8;
+            --portal-border: rgba(255, 255, 255, 0.08);
+            --portal-accent: #10b981;
+            --portal-accent-hover: #059669;
+        }
+
+        body.portal-active {
+            background-color: var(--portal-bg);
+            color: var(--portal-text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .portal-header {
+            background-color: #080f21;
+            border-bottom: 1px solid var(--portal-border);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .portal-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .portal-logo-icon {
+            background-color: var(--portal-accent);
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .portal-logo-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 0.5px;
+        }
+
+        .portal-logo-badge {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            background-color: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--portal-text-muted);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .user-status-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-info-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .user-info-role {
+            font-size: 0.72rem;
+            color: var(--portal-accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-portal-logout {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-portal-logout:hover {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        /* Login Layout styling */
+        .portal-login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 85vh;
+            padding: 24px;
+        }
+
+        .portal-login-card {
+            background: linear-gradient(135deg, #1c2541 0%, #111a33 100%);
+            border: 1px solid var(--portal-border);
+            border-radius: var(--radius-md);
+            padding: 40px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .portal-login-icon {
+            font-size: 3rem;
+            color: var(--portal-accent);
+            margin-bottom: 16px;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .portal-login-card h2 {
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .portal-login-card p {
+            color: var(--portal-text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .portal-login-card .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .portal-login-card label {
+            display: block;
+            color: var(--portal-text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .portal-login-card input {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            color: white;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .portal-login-card input:focus {
+            outline: none;
+            border-color: var(--portal-accent);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.25);
+        }
+
+        /* Workspace Grid */
+        .portal-workspace {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: calc(100vh - 71px);
+        }
+
+        .portal-sidebar {
+            background-color: #080f21;
+            border-right: 1px solid var(--portal-border);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .portal-nav-btn {
+            background: none;
+            border: none;
+            color: var(--portal-text-muted);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            text-align: left;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .portal-nav-btn:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .portal-nav-btn.active {
+            color: white;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid var(--portal-accent);
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .portal-nav-btn i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .portal-main-content {
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .portal-tab-panel {
+            display: none;
+        }
+
+        .portal-tab-panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            margin-bottom: 30px;
+        }
+
+        .panel-header h2 {
+            font-family: 'Outfit', sans-serif;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        .panel-header p {
+            color: var(--portal-text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Widgets and Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background-color: var(--portal-card);
+            border: 1px solid var(--portal-border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stat-card-info h4 {
+            color: var(--portal-text-muted);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card-info div {
+            font-family: 'Outfit', sans-serif;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .stat-card-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255,255,255,0.04);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            color: var(--portal-accent);
+        }
+
+        .stat-card-icon.blue { color: var(--color-blue); }
+        .stat-card-icon.purple { color: var(--color-purple); }
+
+        /* Tables & Lists */
+        .portal-table-wrapper {
+            background-color: var(--portal-card);
+            border: 1px solid var(--portal-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .portal-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .portal-table th {
+            background-color: #0f172a;
+            color: white;
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--portal-border);
+        }
+
+        .portal-table td {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--portal-border);
+            font-size: 0.88rem;
+            color: var(--portal-text);
+        }
+
+        .portal-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .portal-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        /* Badge status colors */
+        .badge-portal {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-settled {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .badge-pending {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .badge-pledge {
+            background-color: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .badge-flagged {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        /* Cards Lists */
+        .alerts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .alert-item {
+            background-color: var(--portal-card);
+            border: 1px solid var(--portal-border);
+            border-left: 4px solid #ef4444;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .alert-item.resolved {
+            border-left-color: var(--portal-accent);
+            opacity: 0.75;
+        }
+
+        .alert-item-content h4 {
+            color: white;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-item-content p {
+            color: var(--portal-text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .alert-item-time {
+            font-size: 0.72rem;
+            color: var(--portal-text-muted);
+        }
+
+        .btn-resolve-alert {
+            background-color: var(--portal-accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-resolve-alert:hover {
+            background-color: var(--portal-accent-hover);
+        }
+
+        /* Forms Layout */
+        .settings-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        .settings-section-card {
+            background-color: var(--portal-card);
+            border: 1px solid var(--portal-border);
+            border-radius: var(--radius-md);
+            padding: 30px;
+        }
+
+        .settings-section-card h3 {
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--portal-border);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: rgba(255,255,255,0.02);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--portal-border);
+        }
+
+        .form-switch label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: white;
+        }
+
+        .form-switch input[type="checkbox"] {
+            width: 44px;
+            height: 22px;
+            appearance: none;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 11px;
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .form-switch input[type="checkbox"]:checked {
+            background-color: var(--portal-accent);
+        }
+
+        .form-switch input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: white;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s ease;
+        }
+
+        .form-switch input[type="checkbox"]:checked::before {
+            transform: translateX(22px);
+        }
+
+        .settings-form-grid .form-group,
+        .tab-form-wrapper .form-group {
+            margin-bottom: 18px;
+        }
+
+        .settings-form-grid label,
+        .tab-form-wrapper label {
+            display: block;
+            color: var(--portal-text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .settings-form-grid input,
+        .settings-form-grid select,
+        .settings-form-grid textarea,
+        .tab-form-wrapper input,
+        .tab-form-wrapper select,
+        .tab-form-wrapper textarea {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--portal-border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .settings-form-grid input:focus,
+        .settings-form-grid select:focus,
+        .settings-form-grid textarea:focus,
+        .tab-form-wrapper input:focus,
+        .tab-form-wrapper select:focus,
+        .tab-form-wrapper textarea:focus {
+            outline: none;
+            border-color: var(--portal-accent);
+        }
+
+        /* Split layouts */
+        .split-tab-grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        .tab-form-wrapper {
+            background-color: var(--portal-card);
+            border: 1px solid var(--portal-border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+        }
+
+        .tab-form-wrapper h3 {
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Story Publish Modifiers */
+        .story-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .story-preview-card {
+            background-color: var(--portal-card);
+            border: 1px solid var(--portal-border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .story-preview-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--portal-border);
+        }
+
+        .story-preview-card-body {
+            padding: 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .story-preview-card-body h4 {
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .story-preview-card-body span {
+            font-size: 0.7rem;
+            color: var(--portal-accent);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="portal-active">
+
+    <!-- Top Status Alerts Area -->
+    <div id="portal-banner" style="background-color: #f59e0b; color: #0f172a; text-align: center; font-size: 0.8rem; font-weight: 700; padding: 6px; display: none;">
+        <i class="fa-solid fa-triangle-exclamation"></i> Security system is actively screening transactions. Security alerts need review.
+    </div>
+
+    <!-- Main Header -->
+    <header class="portal-header">
+        <a href="/" class="portal-logo">
+            <div class="portal-logo-icon">
+                <i class="fa-solid fa-hospital-user"></i>
+            </div>
+            <div>
+                <span class="portal-logo-title">MONSUF</span>
+                <span class="portal-logo-badge">Staff Workspace</span>
+            </div>
+        </a>
+        
+        <div class="user-status-card hide" id="portal-user-status">
+            <div class="user-info">
+                <div class="user-info-name" id="user-display-name">Coordinator</div>
+                <div class="user-info-role" id="user-display-role">Staff Agent</div>
+            </div>
+            <button class="btn-portal-logout" id="btn-portal-logout">Log Out</button>
+        </div>
+    </header>
+
+    <!-- 1. LOGIN CONTAINER -->
+    <div class="portal-login-container" id="portal-login-section">
+        <div class="portal-login-card">
+            <div class="portal-login-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h2>Staff Portal</h2>
+            <p>Access financial ledgers, settings control and sarcoma content management tools.</p>
+            
+            <form id="form-portal-login">
+                <div class="form-group">
+                    <label for="portal-username">Username</label>
+                    <input type="text" id="portal-username" required placeholder="Enter username" autocomplete="username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="portal-password">Password / Passcode</label>
+                    <input type="password" id="portal-password" required placeholder="••••••••" autocomplete="current-password">
+                </div>
+
+                <div id="portal-login-alert" class="alert alert-error hide" style="margin-bottom: 20px; font-size: 0.88rem; background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 10px; border-radius: 4px;">
+                    Invalid login credentials. Please try again.
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" style="padding: 12px;">Sign In to Workspace</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. MAIN WORKSPACE -->
+    <div class="portal-workspace hide" id="portal-workspace-section">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="portal-sidebar">
+            <button class="portal-nav-btn active" data-tab="tab-stats">
+                <i class="fa-solid fa-chart-line"></i> Dashboard Stats
+            </button>
+            <button class="portal-nav-btn" data-tab="tab-ledger" id="nav-btn-ledger">
+                <i class="fa-solid fa-money-check-dollar"></i> Financial Ledger
+            </button>
+            <button class="portal-nav-btn" data-tab="tab-alerts" id="nav-btn-alerts">
+                <i class="fa-solid fa-shield-virus"></i> Security Alerts
+            </button>
+            <button class="portal-nav-btn" data-tab="tab-settings" id="nav-btn-settings">
+                <i class="fa-solid fa-sliders"></i> Portal Settings
+            </button>
+            <button class="portal-nav-btn" data-tab="tab-staff" id="nav-btn-staff">
+                <i class="fa-solid fa-user-gear"></i> Staff Accounts
+            </button>
+            <button class="portal-nav-btn" data-tab="tab-stories">
+                <i class="fa-solid fa-file-medical"></i> Success Stories
+            </button>
+            <button class="portal-nav-btn" data-tab="tab-volunteers">
+                <i class="fa-solid fa-users"></i> Volunteers List
+            </button>
+        </nav>
+
+        <!-- Main Workspace Area -->
+        <main class="portal-main-content">
+
+            <!-- TAB 1: DASHBOARD STATS -->
+            <div class="portal-tab-panel active" id="tab-stats">
+                <div class="panel-header">
+                    <h2 id="stats-greeting">Welcome back!</h2>
+                    <p>Aggregated NGO metrics and donation overview.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-info">
+                            <h4>Total Funds Raised</h4>
+                            <div id="stat-portal-raised">$0.00</div>
+                        </div>
+                        <div class="stat-card-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-info">
+                            <h4>Registered Donors</h4>
+                            <div id="stat-portal-donors">0</div>
+                        </div>
+                        <div class="stat-card-icon blue"><i class="fa-solid fa-people-group"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-info">
+                            <h4>Stories Published</h4>
+                            <div id="stat-portal-stories">0</div>
+                        </div>
+                        <div class="stat-card-icon purple"><i class="fa-solid fa-clipboard-check"></i></div>
+                    </div>
+                </div>
+
+                <h3 style="color: white; margin-bottom: 20px; font-family: 'Outfit';">Quick Activities</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div style="background-color: var(--portal-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--portal-border);">
+                        <h4 style="color: white; margin-bottom: 8px;"><i class="fa-solid fa-hospital text-accent"></i> Partnered with LAMON</h4>
+                        <p style="color: var(--portal-text-muted); font-size: 0.88rem; line-height: 1.5;">MONSUF was carved out from Lagos Musculoskeletal Oncology Network (LAMON), supporting patient welfare and funding clinical research into Sarcomas.</p>
+                    </div>
+                    <div style="background-color: var(--portal-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--portal-border);">
+                        <h4 style="color: white; margin-bottom: 8px;"><i class="fa-solid fa-user-shield text-accent"></i> Fraud Engine Online</h4>
+                        <p style="color: var(--portal-text-muted); font-size: 0.88rem; line-height: 1.5;">The system runs automated checks: Velocity testing blocker (max 3/5mins), micro card testing verification (<$1.00), duplicate reference checking, and high value flags (>$20k).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: FINANCIAL LEDGER (ADMIN ONLY) -->
+            <div class="portal-tab-panel" id="tab-ledger">
+                <div class="panel-header">
+                    <h2>Financial Ledger</h2>
+                    <p>Track credit card transactions, bank transfer references, and cash pledges.</p>
+                </div>
+
+                <div class="portal-table-wrapper">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Donor</th>
+                                <th>Amount (USD)</th>
+                                <th>Method</th>
+                                <th>Details / Reference</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ledger-table-body">
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: var(--portal-text-muted);">Loading ledger records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 3: SECURITY ALERTS (ADMIN ONLY) -->
+            <div class="portal-tab-panel" id="tab-alerts">
+                <div class="panel-header">
+                    <h2>Security & Fraud Center</h2>
+                    <p>Review flags from the transaction vetting engine.</p>
+                </div>
+
+                <div class="alerts-list" id="security-alerts-list">
+                    <div style="background-color: var(--portal-card); text-align: center; color: var(--portal-text-muted); padding: 30px; border-radius: var(--radius-sm); border: 1px solid var(--portal-border);">
+                        No security flags logged by the fraud engine.
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: PORTAL SETTINGS (ADMIN ONLY) -->
+            <div class="portal-tab-panel" id="tab-settings">
+                <div class="panel-header">
+                    <h2>Portal Configuration Settings</h2>
+                    <p>Enable/disable payment options, modify coordinate accounts, and write instructions.</p>
+                </div>
+
+                <form id="form-portal-settings">
+                    <div class="settings-form-grid">
+                        
+                        <!-- Bank Transfer Configuration -->
+                        <div class="settings-section-card">
+                            <h3><i class="fa-solid fa-building-columns text-accent"></i> Bank Transfer Details</h3>
+                            
+                            <div class="form-switch">
+                                <label for="setting-bank-enabled">Enable Bank Transfer Choice</label>
+                                <input type="checkbox" id="setting-bank-enabled">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="setting-bank-name">Bank Name</label>
+                                <input type="text" id="setting-bank-name" placeholder="e.g. Guaranty Trust Bank">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="setting-bank-account-num">Account Number</label>
+                                <input type="text" id="setting-bank-account-num" placeholder="10-digit number">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="setting-bank-account-name">Account Name</label>
+                                <input type="text" id="setting-bank-account-name" placeholder="Official account title">
+                            </div>
+                        </div>
+
+                        <!-- Cash & Online Gateway Settings -->
+                        <div style="display: flex; flex-direction: column; gap: 32px;">
+                            <div class="settings-section-card">
+                                <h3><i class="fa-solid fa-money-bill-wave text-accent"></i> Cash Pledge Settings</h3>
+                                
+                                <div class="form-switch">
+                                    <label for="setting-cash-enabled">Enable Cash Pledge Choice</label>
+                                    <input type="checkbox" id="setting-cash-enabled">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="setting-cash-instructions">Pickup Instructions</label>
+                                    <textarea id="setting-cash-instructions" rows="3" placeholder="Address, coordinator phone, and timing guidelines..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="settings-section-card">
+                                <h3><i class="fa-solid fa-globe text-accent"></i> Credit Card Gateways</h3>
+                                
+                                <div class="form-switch">
+                                    <label for="setting-online-enabled">Enable Card Gateways</label>
+                                    <input type="checkbox" id="setting-online-enabled">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="setting-online-gateway">Active Gateway</label>
+                                    <select id="setting-online-gateway">
+                                        <option value="stripe">Stripe Payments</option>
+                                        <option value="paystack">Paystack Gateway</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="setting-online-key">Mock Public API Key</label>
+                                    <input type="text" id="setting-online-key" placeholder="pk_test_...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
+                        <button type="submit" class="btn btn-primary" style="padding: 14px 40px;" id="btn-save-settings">Save Portal Configuration</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- TAB 5: STAFF MANAGEMENT (ADMIN ONLY) -->
+            <div class="portal-tab-panel" id="tab-staff">
+                <div class="panel-header">
+                    <h2>Staff Accounts Administration</h2>
+                    <p>Create credentials for foundation staff to access clinical publishing and review lists.</p>
+                </div>
+
+                <div class="split-tab-grid">
+                    <!-- Left: Register new Staff -->
+                    <div class="tab-form-wrapper">
+                        <h3><i class="fa-solid fa-user-plus text-accent"></i> Register Staff Account</h3>
+                        <form id="form-register-staff">
+                            <div class="form-group">
+                                <label for="reg-username">Username</label>
+                                <input type="text" id="reg-username" required placeholder="e.g. nurse_mary">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reg-password">Temporary Password</label>
+                                <input type="password" id="reg-password" required placeholder="••••••••">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reg-name">Full Name</label>
+                                <input type="text" id="reg-name" required placeholder="e.g. Mary Okon">
+                            </div>
+
+                            <div id="staff-reg-alert" class="alert hide" style="margin-bottom: 20px; font-size: 0.85rem; padding: 10px; border-radius: 4px;"></div>
+
+                            <button type="submit" class="btn btn-primary btn-block">Create Staff Member</button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Current Users List -->
+                    <div class="portal-table-wrapper" style="align-self: stretch;">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Username</th>
+                                    <th>User Role</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                                <tr>
+                                    <td colspan="3" style="text-align: center; color: var(--portal-text-muted);">Loading user records...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: SUCCESS STORIES (SHARED) -->
+            <div class="portal-tab-panel" id="tab-stories">
+                <div class="panel-header">
+                    <h2>Content Management Panel</h2>
+                    <p>Publish clinical stories, project milestones, and seminar reports.</p>
+                </div>
+
+                <div class="split-tab-grid">
+                    <!-- Left: Add Story form -->
+                    <div class="tab-form-wrapper">
+                        <h3><i class="fa-solid fa-plus text-accent"></i> Publish New Story</h3>
+                        <form id="portal-form-add-story" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="portal-story-title">Title</label>
+                                <input type="text" id="portal-story-title" required placeholder="e.g. Supporting Sarcoma Treatment 2026">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="portal-story-category">Category</label>
+                                <select id="portal-story-category" required>
+                                    <option value="">Select Category...</option>
+                                    <option value="Patients Supported">Patients Supported</option>
+                                    <option value="Research Projects">Research Projects</option>
+                                    <option value="Medical Training">Medical Training</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="portal-story-description">Description</label>
+                                <textarea id="portal-story-description" rows="5" required placeholder="Detail the support given, patient recovery, or research outputs..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="portal-story-image">Upload Image (Max 5MB)</label>
+                                <input type="file" id="portal-story-image" accept="image/*" style="background-color: transparent; border: none; padding: 0;">
+                            </div>
+
+                            <div id="portal-story-alert" class="alert hide" style="margin-bottom: 20px; font-size: 0.85rem; padding: 10px; border-radius: 4px;"></div>
+
+                            <button type="submit" class="btn btn-primary btn-block" id="btn-portal-publish-story">Publish Live Story</button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Story Grid Preview -->
+                    <div>
+                        <h3 style="color: white; margin-bottom: 20px; font-family: 'Outfit';">Active Success Stories</h3>
+                        <div class="story-preview-grid" id="portal-stories-preview-grid">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 7: VOLUNTEERS LIST (SHARED) -->
+            <div class="portal-tab-panel" id="tab-volunteers">
+                <div class="panel-header">
+                    <h2>Volunteer Roster</h2>
+                    <p>Review contact details of individuals who signed up as volunteers.</p>
+                </div>
+
+                <div class="portal-table-wrapper">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Signup Date</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody id="volunteers-table-body">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: var(--portal-text-muted);">Loading volunteer roster...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // State
+        const API_URL = '';
+        let currentUser = null;
+
+        // DOM elements login
+        const portalLoginSection = document.getElementById('portal-login-section');
+        const formPortalLogin = document.getElementById('form-portal-login');
+        const portalUsernameInput = document.getElementById('portal-username');
+        const portalPasswordInput = document.getElementById('portal-password');
+        const portalLoginAlert = document.getElementById('portal-login-alert');
+
+        // DOM elements workspace
+        const portalWorkspaceSection = document.getElementById('portal-workspace-section');
+        const portalUserStatus = document.getElementById('portal-user-status');
+        const userDisplayName = document.getElementById('user-display-name');
+        const userDisplayRole = document.getElementById('user-display-role');
+        const btnPortalLogout = document.getElementById('btn-portal-logout');
+        const portalBanner = document.getElementById('portal-banner');
+        
+        // Navigation Buttons
+        const navBtns = document.querySelectorAll('.portal-nav-btn');
+        const tabPanels = document.querySelectorAll('.portal-tab-panel');
+
+        // Admin Buttons (to hide/show)
+        const navBtnLedger = document.getElementById('nav-btn-ledger');
+        const navBtnAlerts = document.getElementById('nav-btn-alerts');
+        const navBtnSettings = document.getElementById('nav-btn-settings');
+        const navBtnStaff = document.getElementById('nav-btn-staff');
+
+        // Initialize Page
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedToken = sessionStorage.getItem('portal_token');
+            const storedRole = sessionStorage.getItem('portal_role');
+            const storedName = sessionStorage.getItem('portal_name');
+            const storedUser = sessionStorage.getItem('portal_user');
+
+            if (storedToken && storedRole) {
+                currentUser = {
+                    token: storedToken,
+                    role: storedRole,
+                    name: storedName || 'Staff Member',
+                    username: storedUser || ''
+                };
+                showWorkspace();
+            } else {
+                showLogin();
+            }
+
+            initAuthentication();
+            initTabNavigation();
+            initSettingsForm();
+            initStaffRegistration();
+            initStoryPublishing();
+        });
+
+        // 1. AUTHENTICATION
+        function initAuthentication() {
+            formPortalLogin.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                portalLoginAlert.classList.add('hide');
+
+                const username = portalUsernameInput.value.trim();
+                const password = portalPasswordInput.value;
+
+                try {
+                    const response = await fetch(`${API_URL}/api/auth/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        sessionStorage.setItem('portal_token', data.token);
+                        sessionStorage.setItem('portal_role', data.user.role);
+                        sessionStorage.setItem('portal_name', data.user.name);
+                        sessionStorage.setItem('portal_user', data.user.username);
+
+                        currentUser = {
+                            token: data.token,
+                            role: data.user.role,
+                            name: data.user.name,
+                            username: data.user.username
+                        };
+
+                        formPortalLogin.reset();
+                        showWorkspace();
+                    } else {
+                        portalLoginAlert.innerText = data.error || "Invalid login credentials.";
+                        portalLoginAlert.classList.remove('hide');
+                    }
+                } catch (error) {
+                    console.error("Login request failed:", error);
+                    portalLoginAlert.innerText = "Network failure. Cannot contact server.";
+                    portalLoginAlert.classList.remove('hide');
+                }
+            });
+
+            btnPortalLogout.addEventListener('click', () => {
+                sessionStorage.clear();
+                currentUser = null;
+                showLogin();
+            });
+        }
+
+        function showLogin() {
+            portalLoginSection.classList.remove('hide');
+            portalWorkspaceSection.classList.add('hide');
+            portalUserStatus.classList.add('hide');
+            portalBanner.style.display = 'none';
+        }
+
+        function showWorkspace() {
+            portalLoginSection.classList.add('hide');
+            portalWorkspaceSection.classList.remove('hide');
+            portalUserStatus.classList.remove('hide');
+
+            userDisplayName.innerText = currentUser.name;
+            userDisplayRole.innerText = currentUser.role === 'admin' ? 'System Administrator' : 'Staff Agent';
+            document.getElementById('stats-greeting').innerText = `Welcome back, ${currentUser.name}!`;
+
+            // Adjust view options based on role
+            if (currentUser.role === 'admin') {
+                navBtnLedger.style.display = 'flex';
+                navBtnAlerts.style.display = 'flex';
+                navBtnSettings.style.display = 'flex';
+                navBtnStaff.style.display = 'flex';
+                
+                // Show default tab
+                switchTab('tab-stats');
+            } else {
+                navBtnLedger.style.display = 'none';
+                navBtnAlerts.style.display = 'none';
+                navBtnSettings.style.display = 'none';
+                navBtnStaff.style.display = 'none';
+                
+                // Show default staff tab
+                switchTab('tab-stats');
+            }
+
+            // Trigger data loads
+            fetchDashboardStats();
+            fetchStories();
+            fetchVolunteers();
+
+            if (currentUser.role === 'admin') {
+                fetchLedger();
+                fetchAlerts();
+                fetchSettings();
+                fetchUsers();
+            }
+        }
+
+        // 2. TAB NAVIGATION
+        function initTabNavigation() {
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+                    switchTab(targetTab);
+                });
+            });
+        }
+
+        function switchTab(tabId) {
+            navBtns.forEach(b => b.classList.remove('active'));
+            tabPanels.forEach(p => p.classList.remove('active'));
+
+            const activeBtn = document.querySelector(`.portal-nav-btn[data-tab="${tabId}"]`);
+            const activePanel = document.getElementById(tabId);
+
+            if (activeBtn) activeBtn.classList.add('active');
+            if (activePanel) activePanel.classList.add('active');
+
+            // Refresh specific tables on display
+            if (tabId === 'tab-stats') {
+                fetchDashboardStats();
+            } else if (tabId === 'tab-ledger' && currentUser.role === 'admin') {
+                fetchLedger();
+            } else if (tabId === 'tab-alerts' && currentUser.role === 'admin') {
+                fetchAlerts();
+            } else if (tabId === 'tab-settings' && currentUser.role === 'admin') {
+                fetchSettings();
+            } else if (tabId === 'tab-staff' && currentUser.role === 'admin') {
+                fetchUsers();
+            } else if (tabId === 'tab-stories') {
+                fetchStories();
+            } else if (tabId === 'tab-volunteers') {
+                fetchVolunteers();
+            }
+        }
+
+        // 3. FETCH PORTAL STATS
+        async function fetchDashboardStats() {
+            try {
+                const response = await fetch(`${API_URL}/api/stats`);
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('stat-portal-raised').innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(data.totalRaised);
+                    document.getElementById('stat-portal-donors').innerText = data.totalDonors;
+                    document.getElementById('stat-portal-stories').innerText = data.totalStories;
+                }
+            } catch (error) {
+                console.error("Stats retrieve error:", error);
+            }
+        }
+
+        // 4. LEDGER (ADMIN ONLY)
+        async function fetchLedger() {
+            const tbody = document.getElementById('ledger-table-body');
+            try {
+                const response = await fetch(`${API_URL}/api/donations`, {
+                    headers: { 'Authorization': `Bearer ${currentUser.token}` }
+                });
+
+                if (response.ok) {
+                    const donations = await response.json();
+                    tbody.innerHTML = '';
+
+                    if (donations.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--portal-text-muted);">No transactions found in database ledger.</td></tr>`;
+                        return;
+                    }
+
+                    donations.forEach(d => {
+                        const tr = document.createElement('tr');
+                        const dateFormatted = new Date(d.date).toLocaleDateString() + ' ' + new Date(d.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        
+                        let detailsStr = '-';
+                        if (d.paymentMethod === 'Card') {
+                            detailsStr = `<i class="fa-solid fa-credit-card" style="color: var(--color-blue); margin-right: 4px;"></i> ID: ${d.transactionId || 'None'}`;
+                        } else if (d.paymentMethod === 'Bank Transfer') {
+                            detailsStr = `<i class="fa-solid fa-building-columns" style="color: var(--portal-accent); margin-right: 4px;"></i> Narration: "${d.bankReference || ''}"`;
+                        } else if (d.paymentMethod === 'Cash') {
+                            detailsStr = `<i class="fa-solid fa-mobile-screen-button" style="color: var(--color-purple); margin-right: 4px;"></i> Phone: ${d.pledgePhone || ''}`;
+                        }
+
+                        let statusBadgeClass = 'badge-settled';
+                        if (d.status.startsWith('Flagged')) statusBadgeClass = 'badge-flagged';
+                        else if (d.status === 'Pending Verification') statusBadgeClass = 'badge-pending';
+                        else if (d.status === 'Pledge') statusBadgeClass = 'badge-pledge';
+
+                        tr.innerHTML = `
+                            <td>${dateFormatted}</td>
+                            <td>
+                                <div><strong>${escapeHtml(d.name)}</strong></div>
+                                <div style="font-size: 0.75rem; color: var(--portal-text-muted);">${escapeHtml(d.email)}</div>
+                            </td>
+                            <td><strong>${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(d.amount)}</strong></td>
+                            <td>${d.paymentMethod}</td>
+                            <td>${detailsStr}</td>
+                            <td><span class="badge-portal ${statusBadgeClass}">${d.status}</span></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #ef4444;">Failed to fetch ledger details from server.</td></tr>`;
+                }
+            } catch (error) {
+                console.error("Ledger retrieve error:", error);
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #ef4444;">Network connection issue when retrieving ledger records.</td></tr>`;
+            }
+        }
+
+        // 5. SECURITY ALERTS (ADMIN ONLY)
+        async function fetchAlerts() {
+            const container = document.getElementById('security-alerts-list');
+            try {
+                const response = await fetch(`${API_URL}/api/security/alerts`, {
+                    headers: { 'Authorization': `Bearer ${currentUser.token}` }
+                });
+
+                if (response.ok) {
+                    const alerts = await response.json();
+                    container.innerHTML = '';
+
+                    const openAlerts = alerts.filter(a => a.status === 'open');
+                    if (openAlerts.length > 0) {
+                        portalBanner.style.display = 'block';
+                    } else {
+                        portalBanner.style.display = 'none';
+                    }
+
+                    if (alerts.length === 0) {
+                        container.innerHTML = `
+                            <div style="background-color: var(--portal-card); text-align: center; color: var(--portal-text-muted); padding: 35px; border-radius: var(--radius-sm); border: 1px solid var(--portal-border);">
+                                <i class="fa-solid fa-shield-check text-accent" style="font-size: 2rem; margin-bottom: 12px; display: block;"></i>
+                                All clear. No suspicious activities identified by the fraud rules checks.
+                            </div>`;
+                        return;
+                    }
+
+                    alerts.forEach(alert => {
+                        const div = document.createElement('div');
+                        const isResolved = alert.status === 'resolved';
+                        div.className = `alert-item ${isResolved ? 'resolved' : ''}`;
+                        div.style.borderLeftColor = isResolved ? 'var(--portal-accent)' : '#ef4444';
+
+                        const dateFormatted = new Date(alert.date).toLocaleString();
+
+                        let badgeHtml = isResolved 
+                            ? `<span class="badge-portal badge-settled" style="padding: 2px 6px; font-size: 0.65rem;">Resolved</span>`
+                            : `<span class="badge-portal badge-flagged" style="padding: 2px 6px; font-size: 0.65rem;">Open Threat</span>`;
+
+                        div.innerHTML = `
+                            <div class="alert-item-content">
+                                <h4>
+                                    <i class="fa-solid ${isResolved ? 'fa-shield-halved' : 'fa-triangle-exclamation'}" style="color: ${isResolved ? 'var(--portal-accent)' : '#ef4444'}"></i> 
+                                    ${alert.type} 
+                                    ${badgeHtml}
+                                </h4>
+                                <p>${escapeHtml(alert.message)}</p>
+                                <div class="alert-item-time"><i class="fa-regular fa-clock"></i> ${dateFormatted}</div>
+                            </div>
+                            <div>
+                                ${isResolved ? '' : `<button class="btn-resolve-alert" onclick="resolveAlertItem('${alert.id}')">Dismiss / Resolve</button>`}
+                            </div>
+                        `;
+                        container.appendChild(div);
+                    });
+                }
+            } catch (error) {
+                console.error("Alerts lookup failed:", error);
+            }
+        }
+
+        async function resolveAlertItem(alertId) {
+            try {
+                const response = await fetch(`${API_URL}/api/security/resolve-alert`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.token}`
+                    },
+                    body: JSON.stringify({ id: alertId })
+                });
+
+                if (response.ok) {
+                    fetchAlerts();
+                } else {
+                    alert("Failed to resolve security alert.");
+                }
+            } catch (error) {
+                console.error("Error resolving alert:", error);
+            }
+        }
+
+        // 6. PORTAL SETTINGS (ADMIN ONLY)
+        function initSettingsForm() {
+            const form = document.getElementById('form-portal-settings');
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const saveBtn = document.getElementById('btn-save-settings');
+                saveBtn.disabled = true;
+                saveBtn.innerText = 'Saving Configuration...';
+
+                const settingsPayload = {
+                    bankTransfer: {
+                        enabled: document.getElementById('setting-bank-enabled').checked,
+                        bankName: document.getElementById('setting-bank-name').value.trim(),
+                        accountNumber: document.getElementById('setting-bank-account-num').value.trim(),
+                        accountName: document.getElementById('setting-bank-account-name').value.trim()
+                    },
+                    cash: {
+                        enabled: document.getElementById('setting-cash-enabled').checked,
+                        instructions: document.getElementById('setting-cash-instructions').value.trim()
+                    },
+                    onlinePayment: {
+                        enabled: document.getElementById('setting-online-enabled').checked,
+                        activeGateway: document.getElementById('setting-online-gateway').value,
+                        publicKey: document.getElementById('setting-online-key').value.trim()
+                    }
+                };
+
+                try {
+                    const response = await fetch(`${API_URL}/api/settings`, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${currentUser.token}`
+                        },
+                        body: JSON.stringify(settingsPayload)
+                    });
+
+                    if (response.ok) {
+                        alert("Foundation Portal Configuration updated successfully.");
+                        fetchSettings();
+                    } else {
+                        alert("Failed to save coordinate settings.");
+                    }
+                } catch (error) {
+                    console.error("Settings save error:", error);
+                    alert("Network error: Failed to contact configurations service.");
+                } finally {
+                    saveBtn.disabled = false;
+                    saveBtn.innerText = 'Save Portal Configuration';
+                }
+            });
+        }
+
+        async function fetchSettings() {
+            try {
+                const response = await fetch(`${API_URL}/api/settings`);
+                if (response.ok) {
+                    const settings = await response.json();
+                    
+                    // Bank details fields
+                    document.getElementById('setting-bank-enabled').checked = settings.bankTransfer ? settings.bankTransfer.enabled : false;
+                    document.getElementById('setting-bank-name').value = settings.bankTransfer ? settings.bankTransfer.bankName : '';
+                    document.getElementById('setting-bank-account-num').value = settings.bankTransfer ? settings.bankTransfer.accountNumber : '';
+                    document.getElementById('setting-bank-account-name').value = settings.bankTransfer ? settings.bankTransfer.accountName : '';
+
+                    // Cash fields
+                    document.getElementById('setting-cash-enabled').checked = settings.cash ? settings.cash.enabled : false;
+                    document.getElementById('setting-cash-instructions').value = settings.cash ? settings.cash.instructions : '';
+
+                    // Online payment gateway fields
+                    document.getElementById('setting-online-enabled').checked = settings.onlinePayment ? settings.onlinePayment.enabled : false;
+                    document.getElementById('setting-online-gateway').value = settings.onlinePayment ? settings.onlinePayment.activeGateway : 'stripe';
+                    document.getElementById('setting-online-key').value = settings.onlinePayment ? settings.onlinePayment.publicKey : '';
+                }
+            } catch (error) {
+                console.error("Failed to load settings:", error);
+            }
+        }
+
+        // 7. STAFF REGISTRATION & LISTING (ADMIN ONLY)
+        function initStaffRegistration() {
+            const form = document.getElementById('form-register-staff');
+            const alertBox = document.getElementById('staff-reg-alert');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                alertBox.className = 'alert hide';
+
+                const username = document.getElementById('reg-username').value.trim();
+                const password = document.getElementById('reg-password').value;
+                const name = document.getElementById('reg-name').value.trim();
+
+                try {
+                    const response = await fetch(`${API_URL}/api/auth/register-staff`, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${currentUser.token}`
+                        },
+                        body: JSON.stringify({ username, password, name })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alertBox.innerText = `Staff user account "${data.user.username}" created successfully.`;
+                        alertBox.className = 'alert alert-success';
+                        form.reset();
+                        fetchUsers();
+                    } else {
+                        alertBox.innerText = data.error || "Failed to register staff account.";
+                        alertBox.className = 'alert alert-error';
+                    }
+                } catch (error) {
+                    console.error("Staff registration failed:", error);
+                    alertBox.innerText = "Connection issue: Failed to contact the accounts service.";
+                    alertBox.className = 'alert alert-error';
+                }
+            });
+        }
+
+        async function fetchUsers() {
+            const tbody = document.getElementById('users-table-body');
+            try {
+                const response = await fetch(`${API_URL}/api/auth/users`, {
+                    headers: { 'Authorization': `Bearer ${currentUser.token}` }
+                });
+
+                if (response.ok) {
+                    const users = await response.json();
+                    tbody.innerHTML = '';
+
+                    users.forEach(u => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td><strong>${escapeHtml(u.name)}</strong></td>
+                            <td>${escapeHtml(u.username)}</td>
+                            <td><span class="badge-portal badge-settled" style="background-color: rgba(255,255,255,0.06); color: white; border: 1px solid rgba(255,255,255,0.1); font-size: 0.65rem;">${u.role}</span></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            } catch (error) {
+                console.error("Users load failed:", error);
+            }
+        }
+
+        // 8. STORIES REGISTRATION (SHARED VIEW)
+        function initStoryPublishing() {
+            const form = document.getElementById('portal-form-add-story');
+            const alertBox = document.getElementById('portal-story-alert');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                alertBox.className = 'alert hide';
+
+                const title = document.getElementById('portal-story-title').value.trim();
+                const category = document.getElementById('portal-story-category').value;
+                const description = document.getElementById('portal-story-description').value.trim();
+                const file = document.getElementById('portal-story-image').files[0];
+
+                const formData = new FormData();
+                formData.append('title', title);
+                formData.append('category', category);
+                formData.append('description', description);
+                
+                if (file) {
+                    formData.append('image', file);
+                }
+
+                const publishBtn = document.getElementById('btn-portal-publish-story');
+                publishBtn.disabled = true;
+                publishBtn.innerText = 'Publishing Live...';
+
+                try {
+                    const response = await fetch(`${API_URL}/api/stories`, {
+                        method: 'POST',
+                        headers: { 
+                            'Authorization': `Bearer ${currentUser.token}`
+                        },
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alertBox.innerText = "Success story published to public pages!";
+                        alertBox.className = 'alert alert-success';
+                        form.reset();
+                        fetchStories();
+                    } else {
+                        alertBox.innerText = data.error || "Failed to publish success story.";
+                        alertBox.className = 'alert alert-error';
+                    }
+                } catch (error) {
+                    console.error("Story publish failed:", error);
+                    alertBox.innerText = "Network failure: Story submission failed.";
+                    alertBox.className = 'alert alert-error';
+                } finally {
+                    publishBtn.disabled = false;
+                    publishBtn.innerText = 'Publish Live Story';
+                }
+            });
+        }
+
+        async function fetchStories() {
+            const grid = document.getElementById('portal-stories-preview-grid');
+            try {
+                const response = await fetch(`${API_URL}/api/stories`);
+                if (response.ok) {
+                    const stories = await response.json();
+                    grid.innerHTML = '';
+
+                    if (stories.length === 0) {
+                        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--portal-text-muted); font-size: 0.88rem; padding: 20px;">No success stories registered in system.</div>`;
+                        return;
+                    }
+
+                    stories.forEach(story => {
+                        const card = document.createElement('div');
+                        card.className = 'story-preview-card';
+                        card.innerHTML = `
+                            <img src="${story.imageUrl}" alt="${escapeHtml(story.title)}" onerror="this.src='/images/placeholder.jpg'">
+                            <div class="story-preview-card-body">
+                                <div>
+                                    <span>${story.category}</span>
+                                    <h4>${escapeHtml(story.title)}</h4>
+                                </div>
+                                <div style="font-size: 0.72rem; color: var(--portal-text-muted); margin-top: 8px;">Date: ${story.date}</div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                console.error("Stories load failed:", error);
+            }
+        }
+
+        // 9. VOLUNTEERS ROSTER (SHARED VIEW)
+        async function fetchVolunteers() {
+            const tbody = document.getElementById('volunteers-table-body');
+            try {
+                const response = await fetch(`${API_URL}/api/volunteers`, {
+                    headers: { 'Authorization': `Bearer ${currentUser.token}` }
+                });
+
+                if (response.ok) {
+                    const list = await response.json();
+                    tbody.innerHTML = '';
+
+                    if (list.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--portal-text-muted);">No volunteers registered in database.</td></tr>`;
+                        return;
+                    }
+
+                    list.forEach(v => {
+                        const tr = document.createElement('tr');
+                        const dateFormatted = new Date(v.date).toLocaleDateString();
+                        tr.innerHTML = `
+                            <td>${dateFormatted}</td>
+                            <td><strong>${escapeHtml(v.name)}</strong></td>
+                            <td><a href="mailto:${escapeHtml(v.email)}" style="color: var(--portal-accent);">${escapeHtml(v.email)}</a></td>
+                            <td>${escapeHtml(v.phone)}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #ef4444;">Access denied to volunteer list.</td></tr>`;
+                }
+            } catch (error) {
+                console.error("Volunteers listing retrieval error:", error);
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #ef4444;">Network connection issue when loading volunteers roster.</td></tr>`;
+            }
+        }
+
+        // Utils
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
