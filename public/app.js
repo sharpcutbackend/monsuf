@@ -179,18 +179,69 @@ async function fetchStats() {
     }
 }
 
-function updateStatsUI() {
-    if (statTotalRaised) {
-        const raised = appState.stats.totalRaised;
-        // Display in millions for readability
-        if (raised >= 1000000) {
-            statTotalRaised.innerText = '₦' + (raised / 1000000).toFixed(1) + 'M';
+let statsAnimated = false;
+
+function formatRaisedValue(n) {
+    if (n >= 1000000) return '₦' + (n / 1000000).toFixed(1) + 'M';
+    return '₦' + Math.floor(n).toLocaleString('en-NG');
+}
+
+function animateCountUp(el, target, duration, formatter) {
+    if (!el) return;
+    const startTime = performance.now();
+    function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        el.innerText = formatter(eased * target);
+        if (progress < 1) {
+            requestAnimationFrame(tick);
         } else {
-            statTotalRaised.innerText = new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(raised);
+            el.innerText = formatter(target);
         }
     }
-    if (statTotalDonors) statTotalDonors.innerText = appState.stats.totalDonors;
-    if (statTotalStories) statTotalStories.innerText = appState.stats.totalStories;
+    requestAnimationFrame(tick);
+}
+
+function updateStatsUI() {
+    const raised = appState.stats.totalRaised;
+    const donors = appState.stats.totalDonors;
+    const stories = appState.stats.totalStories;
+
+    // Set starting state before animation
+    if (statTotalRaised) statTotalRaised.innerText = '₦0';
+    if (statTotalDonors) statTotalDonors.innerText = '0';
+    if (statTotalStories) statTotalStories.innerText = '0';
+
+    if (statsAnimated) {
+        // Silent update after donation without re-animating
+        if (statTotalRaised) statTotalRaised.innerText = formatRaisedValue(raised);
+        if (statTotalDonors) statTotalDonors.innerText = donors;
+        if (statTotalStories) statTotalStories.innerText = stories;
+        return;
+    }
+
+    const statsCard = document.querySelector('.hero-stats-card');
+    if (!statsCard) return;
+
+    function runAnimation() {
+        statsAnimated = true;
+        animateCountUp(statTotalRaised, raised, 2200, formatRaisedValue);
+        animateCountUp(statTotalDonors, donors, 1800, n => Math.floor(n).toString());
+        animateCountUp(statTotalStories, stories, 1500, n => Math.floor(n).toString());
+    }
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                runAnimation();
+                observer.disconnect();
+            }
+        }, { threshold: 0.3 });
+        observer.observe(statsCard);
+    } else {
+        runAnimation();
+    }
 }
 
 // Fetch and Render Success Stories
