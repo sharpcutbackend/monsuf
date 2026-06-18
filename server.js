@@ -290,15 +290,15 @@ app.post('/api/donate', (req, res) => {
             db.addAlert("Velocity Check", `Email ${email} triggered velocity card-testing limits with multiple submissions.`, { email, count: recentDonations.length + 1 });
         }
 
-        // 2. Anomalous Amount Check
-        if (parsedAmount < 1.00) {
+        // 2. Anomalous Amount Check (thresholds in NGN)
+        if (parsedAmount < 100) {
             isSuspicious = true;
             fraudReasons.push("Anomalous low value");
-            db.addAlert("Card Testing", `Suspected micro card testing: low-value donation ($${parsedAmount}) by ${email}.`, { email, amount: parsedAmount });
-        } else if (parsedAmount > 20000.00) {
+            db.addAlert("Card Testing", `Suspected micro card testing: low-value donation (₦${parsedAmount}) by ${email}.`, { email, amount: parsedAmount });
+        } else if (parsedAmount > 10000000) {
             isSuspicious = true;
             fraudReasons.push("Anomalous high value");
-            db.addAlert("Suspicious Amount", `Abnormal transaction size: high-value donation ($${parsedAmount}) by ${email}.`, { email, amount: parsedAmount });
+            db.addAlert("Suspicious Amount", `Abnormal transaction size: high-value donation (₦${parsedAmount}) by ${email}.`, { email, amount: parsedAmount });
         }
 
         // 3. Disposable/Temporary Email Check
@@ -439,7 +439,7 @@ app.get('/api/stats', (req, res) => {
         // Sum only settled or pending verification, skip flagged fraud / pledges
         const validDonations = donations.filter(d => !d.status.startsWith('Flagged'));
         const totalUserDonationAmount = validDonations.reduce((sum, d) => sum + d.amount, 0);
-        const baseDonationAmount = 25000.00;
+        const baseDonationAmount = 37500000; // ₦37.5M baseline (NGN)
         const totalRaised = baseDonationAmount + totalUserDonationAmount;
         
         const totalDonors = 47 + validDonations.length;
