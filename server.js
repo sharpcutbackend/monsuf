@@ -35,7 +35,8 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
         const ext = path.extname(file.originalname);
-        cb(null, 'story-' + uniqueSuffix + ext);
+        const prefix = req.path && req.path.includes('stories') ? 'story' : 'event';
+        cb(null, prefix + '-' + uniqueSuffix + ext);
     }
 });
 
@@ -112,6 +113,109 @@ app.post('/api/stories', upload.single('image'), (req, res) => {
     } catch (error) {
         console.error("Error creating story:", error);
         res.status(500).json({ error: "Failed to create success story." });
+    }
+});
+
+// --- EVENTS REST APIs ---
+
+// Get all events
+app.get('/api/events', (req, res) => {
+    try {
+        const events = db.getEvents();
+        res.json(events);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to retrieve events." });
+    }
+});
+
+// Create a new event (Staff or Admin auth check)
+app.post('/api/events', upload.single('image'), (req, res) => {
+    try {
+        const { name, date, type, description, passcode } = req.body;
+
+        // Auth check
+        const auth = req.headers.authorization;
+        const isAuthorized = auth && (auth.startsWith('Bearer admin-') || auth.startsWith('Bearer staff-'));
+        if (!isAuthorized && passcode !== 'admin123') {
+            if (req.file) {
+                fs.unlinkSync(req.file.path);
+            }
+            return res.status(403).json({ error: "Unauthorized. Valid credentials required." });
+        }
+
+        if (!name || !date || !type) {
+            if (req.file) {
+                fs.unlinkSync(req.file.path);
+            }
+            return res.status(400).json({ error: "Name, date, and type are required." });
+        }
+
+        let imageUrl = '/images/placeholder.jpg';
+        if (req.file) {
+            imageUrl = '/uploads/' + req.file.filename;
+        }
+
+        const newEvent = db.addEvent({
+            name,
+            date,
+            type,
+            description,
+            imageUrl,
+            status: "active"
+        });
+
+        res.status(201).json({
+            success: true,
+            event: newEvent,
+            message: "Event published successfully!"
+        });
+    } catch (error) {
+        console.error("Error creating event:", error);
+        res.status(500).json({ error: "Failed to create event." });
+    }
+});
+
+// Update an event (Staff/Admin verified)
+app.put('/api/events/:id', verifyStaffOrAdmin, (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedEvent = db.updateEvent(id, req.body);
+        if (!updatedEvent) {
+            return res.status(404).json({ error: "Event not found." });
+        }
+        res.json({
+            success: true,
+            event: updatedEvent,
+            message: "Event updated successfully!"
+        });
+    } catch (error) {
+        console.error("Error updating event:", error);
+        res.status(500).json({ error: "Failed to update event." });
+    }
+});
+
+// Delete an event (Staff/Admin verified)
+app.delete('/api/events/:id', verifyStaffOrAdmin, (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedEvent = db.deleteEvent(id);
+        if (!deletedEvent) {
+            return res.status(404).json({ error: "Event not found." });
+        }
+        // Remove image from filesystem if it is in uploads
+        if (deletedEvent.imageUrl && deletedEvent.imageUrl.startsWith('/uploads/')) {
+            const filePath = path.join(PUBLIC_DIR, deletedEvent.imageUrl);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        }
+        res.json({
+            success: true,
+            message: "Event deleted successfully!"
+        });
+    } catch (error) {
+        console.error("Error deleting event:", error);
+        res.status(500).json({ error: "Failed to delete event." });
     }
 });
 

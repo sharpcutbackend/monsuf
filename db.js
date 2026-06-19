@@ -8,6 +8,7 @@ const DONATIONS_FILE = path.join(DATA_DIR, 'donations.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 const ALERTS_FILE = path.join(DATA_DIR, 'alerts.json');
+const EVENTS_FILE = path.join(DATA_DIR, 'events.json');
 
 // Helper to ensure data files exist
 function initialize() {
@@ -89,6 +90,31 @@ function initialize() {
     // Initialize alerts.json if it doesn't exist
     if (!fs.existsSync(ALERTS_FILE)) {
         fs.writeFileSync(ALERTS_FILE, JSON.stringify([], null, 2), 'utf8');
+    }
+
+    // Initialize events.json if it doesn't exist
+    if (!fs.existsSync(EVENTS_FILE)) {
+        const seedEvents = [
+            {
+                id: "seed-event-1",
+                name: "Sarcoma Awareness Seminar 2026",
+                date: "2026-07-15",
+                type: "upcoming",
+                description: "Join our clinical team and LAMON specialists at LUTH for an informative seminar on early sarcoma identification, diagnostic pathways, and patient support networks.",
+                imageUrl: "/images/story_seminar.jpg",
+                status: "active"
+            },
+            {
+                id: "seed-event-2",
+                name: "LAMON Orthopedic Training Day 2025",
+                date: "2025-11-20",
+                type: "past",
+                description: "A successful intensive training day for orthopedic oncologists and residents, demonstrating advanced limb-salvage surgery techniques for bone tumors.",
+                imageUrl: "/images/story_research.jpg",
+                status: "active"
+            }
+        ];
+        fs.writeFileSync(EVENTS_FILE, JSON.stringify(seedEvents, null, 2), 'utf8');
     }
 }
 
@@ -271,6 +297,78 @@ function resolveAlert(id) {
     }
 }
 
+// Read events
+function getEvents() {
+    initialize();
+    try {
+        const data = fs.readFileSync(EVENTS_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error("Error reading events database:", error);
+        return [];
+    }
+}
+
+// Add an event
+function addEvent(event) {
+    initialize();
+    try {
+        const events = getEvents();
+        const newEvent = {
+            id: 'event-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+            name: event.name,
+            date: event.date,
+            type: event.type || "upcoming",
+            description: event.description || "",
+            imageUrl: event.imageUrl || '/images/placeholder.jpg',
+            status: event.status || "active"
+        };
+        events.unshift(newEvent);
+        fs.writeFileSync(EVENTS_FILE, JSON.stringify(events, null, 2), 'utf8');
+        return newEvent;
+    } catch (error) {
+        console.error("Error writing event to database:", error);
+        throw error;
+    }
+}
+
+// Update an event
+function updateEvent(id, updatedFields) {
+    initialize();
+    try {
+        const events = getEvents();
+        const index = events.findIndex(e => e.id === id);
+        if (index !== -1) {
+            events[index] = { ...events[index], ...updatedFields };
+            fs.writeFileSync(EVENTS_FILE, JSON.stringify(events, null, 2), 'utf8');
+            return events[index];
+        }
+        return null;
+    } catch (error) {
+        console.error("Error updating event in database:", error);
+        throw error;
+    }
+}
+
+// Delete an event
+function deleteEvent(id) {
+    initialize();
+    try {
+        const events = getEvents();
+        const index = events.findIndex(e => e.id === id);
+        if (index !== -1) {
+            const deletedEvent = events[index];
+            events.splice(index, 1);
+            fs.writeFileSync(EVENTS_FILE, JSON.stringify(events, null, 2), 'utf8');
+            return deletedEvent;
+        }
+        return null;
+    } catch (error) {
+        console.error("Error deleting event from database:", error);
+        throw error;
+    }
+}
+
 module.exports = {
     getStories,
     addStory,
@@ -283,5 +381,9 @@ module.exports = {
     getAlerts,
     addAlert,
     resolveAlert,
+    getEvents,
+    addEvent,
+    updateEvent,
+    deleteEvent,
     initialize
 };

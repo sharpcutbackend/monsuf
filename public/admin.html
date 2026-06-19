@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,6 +38,34 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes pageEnter {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pageExit {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-14px);
+            }
+        }
+
+        body.page-exit {
+            animation: pageExit 0.28s cubic-bezier(0.4, 0, 1, 1) forwards;
+            pointer-events: none;
         }
 
         .portal-header {
@@ -265,6 +293,67 @@
 
         .portal-tab-panel.active {
             display: block;
+            animation: tabFadeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .portal-tab-panel.animating-out {
+            display: block;
+            animation: tabFadeOut 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes tabFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes tabFadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+
+        .btn-action-toggle, .btn-action-delete {
+            background: none;
+            border: none;
+            color: var(--portal-text-muted);
+            cursor: pointer;
+            padding: 6px 10px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+        }
+
+        .btn-action-toggle:hover {
+            color: var(--portal-accent);
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+
+        .btn-action-delete:hover {
+            color: #ef4444;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body.portal-active,
+            body.page-exit,
+            .portal-tab-panel.active,
+            .portal-tab-panel.animating-out {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
         }
 
         .panel-header {
@@ -730,6 +819,9 @@
             <button class="portal-nav-btn" data-tab="tab-stories">
                 <i class="fa-solid fa-file-medical"></i> Success Stories
             </button>
+            <button class="portal-nav-btn" data-tab="tab-events" id="nav-btn-events">
+                <i class="fa-solid fa-calendar-days"></i> Events Management
+            </button>
             <button class="portal-nav-btn" data-tab="tab-volunteers">
                 <i class="fa-solid fa-users"></i> Volunteers List
             </button>
@@ -1037,6 +1129,75 @@
                 </div>
             </div>
 
+            <!-- TAB 8: EVENTS MANAGEMENT (SHARED) -->
+            <div class="portal-tab-panel" id="tab-events">
+                <div class="panel-header">
+                    <h2>Events & Activities Management</h2>
+                    <p>Add, toggle status, and delete upcoming and past NGO events.</p>
+                </div>
+
+                <div class="split-tab-grid">
+                    <!-- Left: Add Event form -->
+                    <div class="tab-form-wrapper">
+                        <h3><i class="fa-solid fa-calendar-plus text-accent"></i> Create New Event</h3>
+                        <form id="portal-form-add-event" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="portal-event-name">Event Name</label>
+                                <input type="text" id="portal-event-name" required placeholder="e.g. Laminar Flow Research Seminar">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="portal-event-date">Event Date</label>
+                                <input type="date" id="portal-event-date" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="portal-event-type">Event Type</label>
+                                <select id="portal-event-type" required>
+                                    <option value="">Select Type...</option>
+                                    <option value="upcoming">Upcoming Event</option>
+                                    <option value="past">Past Event Review</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="portal-event-description">Description</label>
+                                <textarea id="portal-event-description" rows="5" required placeholder="Detail the event objectives, coordinates, and timings..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="portal-event-image">Upload Hero Image (Max 5MB)</label>
+                                <input type="file" id="portal-event-image" accept="image/*" style="background-color: transparent; border: none; padding: 0;">
+                            </div>
+
+                            <div id="portal-event-alert" class="alert hide" style="margin-bottom: 20px; font-size: 0.85rem; padding: 10px; border-radius: 4px;"></div>
+
+                            <button type="submit" class="btn btn-primary btn-block" id="btn-portal-publish-event">Publish Event</button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Events Table / List -->
+                    <div class="portal-table-wrapper" style="align-self: stretch;">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Event Details</th>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="events-table-body">
+                                <tr>
+                                    <td colspan="5" style="text-align: center; color: var(--portal-text-muted);">Loading events roster...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -1070,6 +1231,7 @@
         const navBtnAlerts = document.getElementById('nav-btn-alerts');
         const navBtnSettings = document.getElementById('nav-btn-settings');
         const navBtnStaff = document.getElementById('nav-btn-staff');
+        const navBtnEvents = document.getElementById('nav-btn-events');
 
         // Initialize Page
         document.addEventListener('DOMContentLoaded', () => {
@@ -1095,6 +1257,8 @@
             initSettingsForm();
             initStaffRegistration();
             initStoryPublishing();
+            initEventsManagement();
+            initPageTransitions();
         });
 
         // 1. AUTHENTICATION
@@ -1164,6 +1328,8 @@
             userDisplayRole.innerText = currentUser.role === 'admin' ? 'System Administrator' : 'Staff Agent';
             document.getElementById('stats-greeting').innerText = `Welcome back, ${currentUser.name}!`;
 
+            if (navBtnEvents) navBtnEvents.style.display = 'flex';
+
             // Adjust view options based on role
             if (currentUser.role === 'admin') {
                 navBtnLedger.style.display = 'flex';
@@ -1207,16 +1373,50 @@
         }
 
         function switchTab(tabId) {
-            navBtns.forEach(b => b.classList.remove('active'));
-            tabPanels.forEach(p => p.classList.remove('active'));
+            const activePanel = document.querySelector('.portal-tab-panel.active');
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            const activeBtn = document.querySelector(`.portal-nav-btn[data-tab="${tabId}"]`);
-            const activePanel = document.getElementById(tabId);
+            if (activePanel && activePanel.id !== tabId && !prefersReduced) {
+                // If there's an active panel, run exit animation first
+                activePanel.classList.add('animating-out');
+                
+                // Update nav buttons active state immediately
+                navBtns.forEach(b => {
+                    b.classList.remove('active');
+                    if (b.getAttribute('data-tab') === tabId) {
+                        b.classList.add('active');
+                    }
+                });
+                
+                setTimeout(() => {
+                    activePanel.classList.remove('active', 'animating-out');
+                    
+                    const newPanel = document.getElementById(tabId);
+                    if (newPanel) {
+                        newPanel.classList.add('active');
+                        loadTabData(tabId);
+                    }
+                }, 200); // matches 0.2s tabFadeOut
+            } else {
+                // Reduced motion or no active panel: switch instantly
+                navBtns.forEach(b => b.classList.remove('active'));
+                tabPanels.forEach(p => p.classList.remove('active'));
+                if (activePanel) {
+                    activePanel.classList.remove('animating-out');
+                }
 
-            if (activeBtn) activeBtn.classList.add('active');
-            if (activePanel) activePanel.classList.add('active');
+                const activeBtn = document.querySelector(`.portal-nav-btn[data-tab="${tabId}"]`);
+                const newPanel = document.getElementById(tabId);
 
-            // Refresh specific tables on display
+                if (activeBtn) activeBtn.classList.add('active');
+                if (newPanel) {
+                    newPanel.classList.add('active');
+                    loadTabData(tabId);
+                }
+            }
+        }
+
+        function loadTabData(tabId) {
             if (tabId === 'tab-stats') {
                 fetchDashboardStats();
             } else if (tabId === 'tab-ledger' && currentUser.role === 'admin') {
@@ -1231,6 +1431,8 @@
                 fetchStories();
             } else if (tabId === 'tab-volunteers') {
                 fetchVolunteers();
+            } else if (tabId === 'tab-events') {
+                fetchEvents();
             }
         }
 
@@ -1676,6 +1878,193 @@
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
         }
+
+        // --- EVENTS MANAGEMENT ---
+        function initEventsManagement() {
+            const form = document.getElementById('portal-form-add-event');
+            const alertBox = document.getElementById('portal-event-alert');
+
+            if (!form) return;
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                alertBox.className = 'alert hide';
+
+                const name = document.getElementById('portal-event-name').value.trim();
+                const date = document.getElementById('portal-event-date').value;
+                const type = document.getElementById('portal-event-type').value;
+                const description = document.getElementById('portal-event-description').value.trim();
+                const file = document.getElementById('portal-event-image').files[0];
+
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('date', date);
+                formData.append('type', type);
+                formData.append('description', description);
+
+                if (file) {
+                    formData.append('image', file);
+                }
+
+                const publishBtn = document.getElementById('btn-portal-publish-event');
+                publishBtn.disabled = true;
+                publishBtn.innerText = 'Publishing...';
+
+                try {
+                    const response = await fetch(`${API_URL}/api/events`, {
+                        method: 'POST',
+                        headers: { 
+                            'Authorization': `Bearer ${currentUser.token}`
+                        },
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alertBox.innerText = "Event published successfully!";
+                        alertBox.className = 'alert alert-success';
+                        alertBox.classList.remove('hide');
+                        form.reset();
+                        fetchEvents();
+                    } else {
+                        alertBox.innerText = data.error || "Failed to publish event.";
+                        alertBox.className = 'alert alert-error';
+                        alertBox.classList.remove('hide');
+                    }
+                } catch (error) {
+                    console.error("Event publish failed:", error);
+                    alertBox.innerText = "Network failure: Event submission failed.";
+                    alertBox.className = 'alert alert-error';
+                    alertBox.classList.remove('hide');
+                } finally {
+                    publishBtn.disabled = false;
+                    publishBtn.innerText = 'Publish Event';
+                }
+            });
+        }
+
+        async function fetchEvents() {
+            const tbody = document.getElementById('events-table-body');
+            if (!tbody) return;
+
+            try {
+                const response = await fetch(`${API_URL}/api/events`);
+                if (response.ok) {
+                    const events = await response.json();
+                    tbody.innerHTML = '';
+
+                    if (events.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--portal-text-muted);">No events registered in system.</td></tr>`;
+                        return;
+                    }
+
+                    events.forEach(event => {
+                        const tr = document.createElement('tr');
+                        const dateFormatted = new Date(event.date).toLocaleDateString('en-US', {
+                            year: 'numeric', month: 'short', day: 'numeric'
+                        });
+
+                        const statusBadgeClass = event.status === 'active' ? 'badge-settled' : 'badge-pending';
+                        const displayStatus = event.status === 'active' ? 'Visible' : 'Hidden';
+
+                        tr.innerHTML = `
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <img src="${event.imageUrl}" alt="${escapeHtml(event.name)}" onerror="this.src='/images/placeholder.jpg'" style="width: 48px; height: 32px; object-fit: cover; border-radius: 4px; border: 1px solid var(--portal-border);">
+                                    <div>
+                                        <strong>${escapeHtml(event.name)}</strong>
+                                        <div style="font-size: 0.75rem; color: var(--portal-text-muted); max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(event.description)}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>${dateFormatted}</td>
+                            <td style="text-transform: capitalize;">${event.type}</td>
+                            <td><span class="badge-portal ${statusBadgeClass}">${displayStatus}</span></td>
+                            <td>
+                                <button class="btn-action-toggle" onclick="toggleEventStatus('${event.id}', '${event.status}')" title="${event.status === 'active' ? 'Hide Event' : 'Show Event'}">
+                                    <i class="fa-solid ${event.status === 'active' ? 'fa-eye-slash' : 'fa-eye'}"></i>
+                                </button>
+                                <button class="btn-action-delete" onclick="deleteEventItem('${event.id}')" title="Delete Event">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            } catch (error) {
+                console.error("Events load failed:", error);
+            }
+        }
+
+        async function toggleEventStatus(id, currentStatus) {
+            const nextStatus = currentStatus === 'active' ? 'hidden' : 'active';
+            try {
+                const response = await fetch(`${API_URL}/api/events/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.token}`
+                    },
+                    body: JSON.stringify({ status: nextStatus })
+                });
+
+                if (response.ok) {
+                    fetchEvents();
+                } else {
+                    alert("Failed to toggle event status.");
+                }
+            } catch (error) {
+                console.error("Error toggling event status:", error);
+            }
+        }
+
+        async function deleteEventItem(id) {
+            if (!confirm("Are you sure you want to permanently delete this event?")) return;
+
+            try {
+                const response = await fetch(`${API_URL}/api/events/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${currentUser.token}`
+                    }
+                });
+
+                if (response.ok) {
+                    fetchEvents();
+                } else {
+                    alert("Failed to delete event.");
+                }
+            } catch (error) {
+                console.error("Error deleting event:", error);
+            }
+        }
+
+        // --- PAGE TRANSITIONS ---
+        function initPageTransitions() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            document.addEventListener('click', (e) => {
+                const link = e.target.closest('a[href]');
+                if (!link) return;
+
+                const href = link.getAttribute('href');
+                if (!href || href.startsWith('#') || href.startsWith('http') ||
+                    href.startsWith('mailto') || href.startsWith('tel') || href.startsWith('javascript')) return;
+
+                if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+                if (link.target === '_blank') return;
+
+                e.preventDefault();
+                document.body.classList.add('page-exit');
+                setTimeout(() => { window.location.href = href; }, 280);
+            });
+        }
+
+        // Bind global window references for inline handlers
+        window.toggleEventStatus = toggleEventStatus;
+        window.deleteEventItem = deleteEventItem;
     </script>
 </body>
 </html>

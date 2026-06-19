@@ -97,6 +97,7 @@ const impactDescriptions = {
 document.addEventListener('DOMContentLoaded', () => {
     fetchStats();
     fetchStories();
+    fetchEvents();
     initNavigationEvents();
     initAdminEvents();
     initDonationEvents();
@@ -346,7 +347,7 @@ function initAdminEvents() {
                 if (adminActionsBar) adminActionsBar.classList.add('hide');
                 btnAdminToggle.innerHTML = '<i class="fa-solid fa-lock"></i> Staff Portal';
             } else {
-                if (modalAdminLogin) modalAdminLogin.classList.remove('hide');
+                if (modalAdminLogin) modalAdminLogin.classList.add('active');
                 if (adminPasscodeInput) adminPasscodeInput.value = '';
                 if (adminLoginError) adminLoginError.classList.add('hide');
                 if (adminPasscodeInput) adminPasscodeInput.focus();
@@ -356,7 +357,7 @@ function initAdminEvents() {
 
     if (btnCloseAdminModal) {
         btnCloseAdminModal.addEventListener('click', () => {
-            if (modalAdminLogin) modalAdminLogin.classList.add('hide');
+            if (modalAdminLogin) modalAdminLogin.classList.remove('active');
         });
     }
 
@@ -367,7 +368,7 @@ function initAdminEvents() {
             
             if (passcode === 'admin123') {
                 appState.isAdmin = true;
-                if (modalAdminLogin) modalAdminLogin.classList.add('hide');
+                if (modalAdminLogin) modalAdminLogin.classList.remove('active');
                 if (adminBadge) adminBadge.classList.remove('hide');
                 if (adminActionsBar) adminActionsBar.classList.remove('hide');
                 btnAdminToggle.innerHTML = '<i class="fa-solid fa-lock-open"></i> Log Out Staff';
@@ -380,7 +381,7 @@ function initAdminEvents() {
 
     if (btnAddStoryModal) {
         btnAddStoryModal.addEventListener('click', () => {
-            if (modalAddStory) modalAddStory.classList.remove('hide');
+            if (modalAddStory) modalAddStory.classList.add('active');
             if (storyUploadError) storyUploadError.classList.add('hide');
             if (formAddStory) formAddStory.reset();
         });
@@ -388,7 +389,7 @@ function initAdminEvents() {
 
     if (btnCloseStoryModal) {
         btnCloseStoryModal.addEventListener('click', () => {
-            if (modalAddStory) modalAddStory.classList.add('hide');
+            if (modalAddStory) modalAddStory.classList.remove('active');
         });
     }
 
@@ -424,7 +425,7 @@ function initAdminEvents() {
                 });
 
                 if (response.ok) {
-                    if (modalAddStory) modalAddStory.classList.add('hide');
+                    if (modalAddStory) modalAddStory.classList.remove('active');
                     await fetchStories();
                     await fetchStats();
                 } else {
@@ -549,13 +550,13 @@ function initDonationEvents() {
 
         if (method === 'Card') {
             if (secCard) secCard.classList.remove('hide');
-            if (visualColumn) visualColumn.classList.remove('hide');
+            if (visualColumn) visualColumn.classList.remove('hide-visual');
         } else if (method === 'Bank Transfer') {
             if (secBank) secBank.classList.remove('hide');
-            if (visualColumn) visualColumn.classList.add('hide');
+            if (visualColumn) visualColumn.classList.add('hide-visual');
         } else if (method === 'Cash') {
             if (secCash) secCash.classList.remove('hide');
-            if (visualColumn) visualColumn.classList.add('hide');
+            if (visualColumn) visualColumn.classList.add('hide-visual');
         }
     }
 
@@ -594,7 +595,7 @@ function initDonationEvents() {
         showCurrencyNote(amt);
     });
 
-    // Move to payment portal form
+    // Move to payment portal form with animations
     btnNextToPayment.addEventListener('click', () => {
         const name = donorNameInput.value.trim();
         const email = donorEmailInput.value.trim();
@@ -624,15 +625,61 @@ function initDonationEvents() {
             togglePaymentSections(activeRadio.value);
         }
 
-        // Toggle form frames
-        donationSetupForm.classList.add('hide');
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+            donationSetupForm.classList.add('hide');
+            donationPaymentForm.classList.remove('hide');
+            return;
+        }
+
+        // Slide transition setup
+        donationSetupForm.classList.add('slide-out-left');
+        donationPaymentForm.style.transform = 'translateX(40px)';
+        donationPaymentForm.style.opacity = '0';
         donationPaymentForm.classList.remove('hide');
+        
+        // Force reflow
+        donationPaymentForm.offsetHeight;
+        
+        donationPaymentForm.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+        donationPaymentForm.style.transform = 'translateX(0)';
+        donationPaymentForm.style.opacity = '1';
+        
+        setTimeout(() => {
+            donationSetupForm.classList.add('hide');
+            donationSetupForm.classList.remove('slide-out-left');
+            donationPaymentForm.style.transition = '';
+            donationPaymentForm.style.transform = '';
+            donationPaymentForm.style.opacity = '';
+        }, 350);
     });
 
-    // Back to first details stage
+    // Back to first details stage with animations
     btnBackToDetails.addEventListener('click', () => {
-        donationPaymentForm.classList.add('hide');
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+            donationPaymentForm.classList.add('hide');
+            donationSetupForm.classList.remove('hide');
+            return;
+        }
+
+        donationPaymentForm.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+        donationPaymentForm.style.transform = 'translateX(40px)';
+        donationPaymentForm.style.opacity = '0';
+        
+        donationSetupForm.classList.add('slide-out-left');
         donationSetupForm.classList.remove('hide');
+        
+        // Force reflow
+        donationSetupForm.offsetHeight;
+        donationSetupForm.classList.remove('slide-out-left');
+        
+        setTimeout(() => {
+            donationPaymentForm.classList.add('hide');
+            donationPaymentForm.style.transition = '';
+            donationPaymentForm.style.transform = '';
+            donationPaymentForm.style.opacity = '';
+        }, 350);
     });
 
     function formatNGN(amount) {
@@ -798,7 +845,7 @@ function initDonationEvents() {
                     receiptMsg.innerText = data.message || "A formal tax-deductible receipt has been dispatched to your email address. Your contribution directly funds musculoskeletal oncology care and research.";
                 }
 
-                modalReceipt.classList.remove('hide');
+                modalReceipt.classList.add('active');
                 
                 // Reset State
                 donationPaymentForm.reset();
@@ -837,7 +884,7 @@ function initDonationEvents() {
 
     // Close Receipt Modal
     btnCloseReceipt.addEventListener('click', () => {
-        modalReceipt.classList.add('hide');
+        modalReceipt.classList.remove('active');
     });
 }
 
@@ -965,4 +1012,91 @@ function initVolunteerEvents() {
             }
         });
     }
+}
+
+// Fetch and Render Events on Homepage
+async function fetchEvents() {
+    const upcomingGrid = document.getElementById('upcoming-events-grid');
+    const pastGrid = document.getElementById('past-events-grid');
+    if (!upcomingGrid && !pastGrid) return; // Only run on homepage
+    
+    try {
+        const response = await fetch(`${API_URL}/api/events`);
+        if (response.ok) {
+            const events = await response.json();
+            renderEventsList(events);
+        } else {
+            upcomingGrid.innerHTML = '<div class="events-empty">Error loading events from server.</div>';
+            pastGrid.innerHTML = '<div class="events-empty">Error loading events from server.</div>';
+        }
+    } catch (error) {
+        console.error("Failed to load events:", error);
+        upcomingGrid.innerHTML = '<div class="events-empty">Network error. Please try again later.</div>';
+        pastGrid.innerHTML = '<div class="events-empty">Network error. Please try again later.</div>';
+    }
+}
+
+function renderEventsList(events) {
+    const upcomingGrid = document.getElementById('upcoming-events-grid');
+    const pastGrid = document.getElementById('past-events-grid');
+    if (!upcomingGrid || !pastGrid) return;
+
+    upcomingGrid.innerHTML = '';
+    pastGrid.innerHTML = '';
+
+    // Filter active events
+    const activeEvents = events.filter(e => e.status === 'active');
+    
+    const upcomingEvents = activeEvents.filter(e => e.type === 'upcoming');
+    const pastEvents = activeEvents.filter(e => e.type === 'past');
+
+    if (upcomingEvents.length === 0) {
+        upcomingGrid.innerHTML = '<div class="events-empty"><i class="fa-regular fa-calendar"></i> No upcoming events scheduled at this moment.</div>';
+    } else {
+        upcomingEvents.forEach(event => {
+            upcomingGrid.appendChild(createEventCard(event));
+        });
+    }
+
+    if (pastEvents.length === 0) {
+        pastGrid.innerHTML = '<div class="events-empty"><i class="fa-regular fa-calendar-check"></i> No past event reviews published yet.</div>';
+    } else {
+        pastEvents.forEach(event => {
+            pastGrid.appendChild(createEventCard(event));
+        });
+    }
+}
+
+function createEventCard(event) {
+    const card = document.createElement('div');
+    card.className = 'event-card';
+    
+    const typeLabel = event.type === 'upcoming' ? 'Upcoming' : 'Past Review';
+    const tagClass = event.type === 'upcoming' ? 'upcoming' : 'past';
+    const displayDate = new Date(event.date).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    card.innerHTML = `
+        <div class="event-img-wrapper">
+            <span class="event-category-tag ${tagClass}">${typeLabel}</span>
+            <img class="event-img" src="${event.imageUrl}" alt="${event.name}" onerror="this.src='/images/placeholder.jpg'">
+        </div>
+        <div class="event-body">
+            <span class="event-date"><i class="fa-regular fa-clock"></i> ${displayDate}</span>
+            <h3 class="event-title">${escapeHtml(event.name)}</h3>
+            <p class="event-desc">${escapeHtml(event.description)}</p>
+        </div>
+    `;
+    return card;
+}
+
+// Utility to escape HTML text safely
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#039;');
 }
