@@ -754,6 +754,7 @@
         <a href="/" class="portal-logo">
             <img src="/images/logo.png" alt="MONSUF" style="height: 40px; width: auto; background: rgba(255,255,255,0.9); padding: 3px 8px; border-radius: 6px;">
             <div>
+                <span class="portal-logo-title" style="display:block;">Monsuf</span>
                 <span class="portal-logo-badge" style="display:block;">Staff Workspace</span>
             </div>
         </a>
@@ -1373,46 +1374,18 @@
         }
 
         function switchTab(tabId) {
-            const activePanel = document.querySelector('.portal-tab-panel.active');
-            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            navBtns.forEach(b => b.classList.remove('active'));
+            tabPanels.forEach(p => {
+                p.classList.remove('active', 'animating-out');
+            });
 
-            if (activePanel && activePanel.id !== tabId && !prefersReduced) {
-                // If there's an active panel, run exit animation first
-                activePanel.classList.add('animating-out');
-                
-                // Update nav buttons active state immediately
-                navBtns.forEach(b => {
-                    b.classList.remove('active');
-                    if (b.getAttribute('data-tab') === tabId) {
-                        b.classList.add('active');
-                    }
-                });
-                
-                setTimeout(() => {
-                    activePanel.classList.remove('active', 'animating-out');
-                    
-                    const newPanel = document.getElementById(tabId);
-                    if (newPanel) {
-                        newPanel.classList.add('active');
-                        loadTabData(tabId);
-                    }
-                }, 200); // matches 0.2s tabFadeOut
-            } else {
-                // Reduced motion or no active panel: switch instantly
-                navBtns.forEach(b => b.classList.remove('active'));
-                tabPanels.forEach(p => p.classList.remove('active'));
-                if (activePanel) {
-                    activePanel.classList.remove('animating-out');
-                }
+            const activeBtn = document.querySelector(`.portal-nav-btn[data-tab="${tabId}"]`);
+            const activePanel = document.getElementById(tabId);
 
-                const activeBtn = document.querySelector(`.portal-nav-btn[data-tab="${tabId}"]`);
-                const newPanel = document.getElementById(tabId);
-
-                if (activeBtn) activeBtn.classList.add('active');
-                if (newPanel) {
-                    newPanel.classList.add('active');
-                    loadTabData(tabId);
-                }
+            if (activeBtn) activeBtn.classList.add('active');
+            if (activePanel) {
+                activePanel.classList.add('active');
+                loadTabData(tabId);
             }
         }
 
@@ -1814,7 +1787,7 @@
                         const card = document.createElement('div');
                         card.className = 'story-preview-card';
                         card.innerHTML = `
-                            <img src="${story.imageUrl}" alt="${escapeHtml(story.title)}" onerror="this.src='/images/placeholder.jpg'">
+                            <img src="${story.imageUrl}" alt="${escapeHtml(story.title)}" onerror="this.src='/images/placeholder.jpg'" loading="lazy">
                             <div class="story-preview-card-body">
                                 <div>
                                     <span>${story.category}</span>
@@ -1971,7 +1944,7 @@
                         tr.innerHTML = `
                             <td>
                                 <div style="display: flex; align-items: center; gap: 12px;">
-                                    <img src="${event.imageUrl}" alt="${escapeHtml(event.name)}" onerror="this.src='/images/placeholder.jpg'" style="width: 48px; height: 32px; object-fit: cover; border-radius: 4px; border: 1px solid var(--portal-border);">
+                                    <img src="${event.imageUrl}" alt="${escapeHtml(event.name)}" onerror="this.src='/images/placeholder.jpg'" style="width: 48px; height: 32px; object-fit: cover; border-radius: 4px; border: 1px solid var(--portal-border);" loading="lazy">
                                     <div>
                                         <strong>${escapeHtml(event.name)}</strong>
                                         <div style="font-size: 0.75rem; color: var(--portal-text-muted); max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(event.description)}</div>
@@ -2043,23 +2016,7 @@
 
         // --- PAGE TRANSITIONS ---
         function initPageTransitions() {
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-            document.addEventListener('click', (e) => {
-                const link = e.target.closest('a[href]');
-                if (!link) return;
-
-                const href = link.getAttribute('href');
-                if (!href || href.startsWith('#') || href.startsWith('http') ||
-                    href.startsWith('mailto') || href.startsWith('tel') || href.startsWith('javascript')) return;
-
-                if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
-                if (link.target === '_blank') return;
-
-                e.preventDefault();
-                document.body.classList.add('page-exit');
-                setTimeout(() => { window.location.href = href; }, 280);
-            });
+            // Pages enter instantly with a snappy CSS fade & slide animation. No click interception or timeouts are used to prevent navigation delays.
         }
 
         // Bind global window references for inline handlers

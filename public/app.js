@@ -108,28 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- PAGE TRANSITIONS ---
 function initPageTransitions() {
-    // Skip if user prefers reduced motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    document.addEventListener('click', (e) => {
-        const link = e.target.closest('a[href]');
-        if (!link) return;
-
-        const href = link.getAttribute('href');
-        // Only intercept internal page navigations — skip anchors, external, mailto, tel
-        if (!href || href.startsWith('#') || href.startsWith('http') ||
-            href.startsWith('mailto') || href.startsWith('tel') || href.startsWith('javascript')) return;
-
-        // Skip if modifier key held (open in new tab, etc.)
-        if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
-
-        // Skip links that open in a new tab
-        if (link.target === '_blank') return;
-
-        e.preventDefault();
-        document.body.classList.add('page-exit');
-        setTimeout(() => { window.location.href = href; }, 280);
-    });
+    // Pages enter instantly with a snappy CSS fade & slide animation. No click interception or timeouts are used to prevent navigation delays.
 }
 
 // Mobile Navigation Toggle
@@ -313,7 +292,7 @@ function renderStories(filterCategory) {
         card.innerHTML = `
             <div class="story-img-wrapper">
                 <span class="story-category-tag ${categoryClass}">${story.category}</span>
-                <img class="story-img" src="${story.imageUrl}" alt="${story.title}" onerror="this.src='/images/placeholder.jpg'">
+                <img class="story-img" src="${story.imageUrl}" alt="${story.title}" onerror="this.src='/images/placeholder.jpg'" loading="lazy">
             </div>
             <div class="story-body">
                 <span class="story-date"><i class="fa-regular fa-calendar"></i> ${story.date}</span>
@@ -1080,7 +1059,7 @@ function createEventCard(event) {
     card.innerHTML = `
         <div class="event-img-wrapper">
             <span class="event-category-tag ${tagClass}">${typeLabel}</span>
-            <img class="event-img" src="${event.imageUrl}" alt="${event.name}" onerror="this.src='/images/placeholder.jpg'">
+            <img class="event-img" src="${event.imageUrl}" alt="${event.name}" onerror="this.src='/images/placeholder.jpg'" loading="lazy">
         </div>
         <div class="event-body">
             <span class="event-date"><i class="fa-regular fa-clock"></i> ${displayDate}</span>
