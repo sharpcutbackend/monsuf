@@ -42,6 +42,14 @@ function initialize() {
                 description: "We successfully sponsored the LAMON training seminar for 50 orthopedic surgeons and oncology residents, teaching modern limb-salvage surgery techniques for musculoskeletal tumors.",
                 imageUrl: "/images/story_seminar.jpg",
                 date: "2026-06-01"
+            },
+            {
+                id: "seed-4",
+                title: "2026 School Cancer Awareness Program",
+                category: "Patients Supported",
+                description: "MONSUF partnered with schools across Lagos State to deliver the 2026 School Cancer Awareness Program — educating students, teachers, and parents on early signs of musculoskeletal tumours, encouraging early referral and prompt medical consultation for better outcomes.",
+                imageUrl: "/images/story_awareness.jpg",
+                date: "2026-04-22"
             }
         ];
         fs.writeFileSync(STORIES_FILE, JSON.stringify(seedStories, null, 2), 'utf8');
